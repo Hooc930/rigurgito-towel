@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
     <style>
         :root {
@@ -21,6 +23,7 @@
             --color-bg: #FAFAFA;
             --color-accent: #8B7355;
             --color-danger: #dc2626;
+            --color-success: #16a34a;
         }
         body {
             font-family: 'Assistant', 'Rubik', sans-serif;
@@ -30,6 +33,11 @@
             padding: 0;
             overflow-x: hidden;
         }
+        
+        .icon { width: 20px; height: 20px; stroke-width: 2; }
+        .icon-sm { width: 16px; height: 16px; }
+        .icon-lg { width: 24px; height: 24px; }
+        .icon-xl { width: 32px; height: 32px; }
         
         .sticky-header-group {
             position: sticky;
@@ -92,13 +100,11 @@
             border-color: var(--color-primary);
             background-color: var(--color-cream);
         }
-        .variant-btn:hover {
-            border-color: var(--color-primary);
-        }
+        .variant-btn:hover { border-color: var(--color-primary); }
 
         .color-swatch {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
             border: 3px solid transparent;
@@ -108,21 +114,6 @@
         .color-swatch.active {
             border-color: var(--color-primary);
             transform: scale(1.1);
-        }
-        .color-swatch::after {
-            content: attr(data-name);
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 10px;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-        .color-swatch:hover::after,
-        .color-swatch.active::after {
-            opacity: 1;
         }
 
         .quantity-break {
@@ -171,9 +162,7 @@
             right: 12px;
             font-weight: bold;
         }
-        .badge-tag.green {
-            background: #16a34a;
-        }
+        .badge-tag.green { background: var(--color-success); }
 
         .cta-primary {
             background: var(--color-primary);
@@ -182,12 +171,8 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-        .cta-primary:hover {
-            opacity: 0.9;
-        }
-        .cta-primary:active {
-            transform: scale(0.98);
-        }
+        .cta-primary:hover { opacity: 0.9; }
+        .cta-primary:active { transform: scale(0.98); }
 
         .sticky-btn {
             position: fixed;
@@ -216,7 +201,6 @@
         input:checked + .slider-toggle { background-color: var(--color-primary); }
         input:checked + .slider-toggle:before { transform: translateX(20px); }
 
-        /* Contaminant Grid */
         .contaminant-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -235,8 +219,10 @@
             box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
         }
         .contaminant-icon {
-            font-size: 28px;
             margin-bottom: 8px;
+            display: flex;
+            justify-content: center;
+            color: var(--color-danger);
         }
         .contaminant-name {
             font-weight: 700;
@@ -244,7 +230,6 @@
             color: var(--color-danger);
         }
 
-        /* Comparison Section */
         .comparison-card {
             border-radius: 16px;
             padding: 24px;
@@ -273,19 +258,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
             margin-top: 2px;
         }
-        .comparison-card.bad .comparison-icon {
-            background: #dc2626;
-            color: white;
-        }
-        .comparison-card.good .comparison-icon {
-            background: #16a34a;
-            color: white;
-        }
+        .comparison-card.bad .comparison-icon { background: var(--color-danger); color: white; }
+        .comparison-card.good .comparison-icon { background: var(--color-success); color: white; }
 
-        /* Stats Grid */
         .stat-card {
             background: white;
             border-radius: 16px;
@@ -300,20 +277,10 @@
             color: var(--color-primary);
             line-height: 1;
         }
-        .stat-unit {
-            font-size: 24px;
-        }
-        .stat-label {
-            font-weight: 700;
-            margin-top: 8px;
-            margin-bottom: 4px;
-        }
-        .stat-desc {
-            font-size: 13px;
-            color: #666;
-        }
+        .stat-unit { font-size: 24px; }
+        .stat-label { font-weight: 700; margin-top: 8px; margin-bottom: 4px; }
+        .stat-desc { font-size: 13px; color: #666; }
 
-        /* Review Cards */
         .review-card {
             background: white;
             padding: 20px;
@@ -322,32 +289,18 @@
             border: 1px solid #f0f0f0;
             text-align: right;
         }
-        .review-stars {
-            color: #fbbf24;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-        .review-text {
-            font-size: 14px;
-            color: #444;
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-        .review-author {
-            font-size: 12px;
-            color: #888;
-            font-weight: 600;
-        }
+        .review-stars { color: #fbbf24; font-size: 14px; margin-bottom: 8px; }
+        .review-text { font-size: 14px; color: #444; margin-bottom: 12px; line-height: 1.6; }
+        .review-author { font-size: 12px; color: #888; font-weight: 600; }
         .review-verified {
             display: inline-flex;
             align-items: center;
             gap: 4px;
             font-size: 11px;
-            color: #16a34a;
+            color: var(--color-success);
             margin-top: 4px;
         }
 
-        /* Upsell Flow */
         #upsell-flow { position: fixed; inset: 0; background: var(--color-primary); z-index: 300; display: none; flex-direction: column; }
         #upsell-flow.active { display: flex; }
         .upsell-step-container { flex: 1; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; padding-bottom: 20px; }
@@ -357,7 +310,6 @@
         .slide-in-up { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        /* Pulse animation for social proof */
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
@@ -365,14 +317,24 @@
         .pulse-dot {
             width: 8px;
             height: 8px;
-            background: #16a34a;
+            background: var(--color-success);
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
 
-        /* FAQ */
         details summary::-webkit-details-marker { display: none; }
         details summary { list-style: none; }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -381,8 +343,9 @@
         <header class="py-3 flex justify-center bg-white border-b border-gray-100">
             <div class="text-2xl font-black tracking-tight" style="color: var(--color-primary);">RIGURGITO</div>
         </header>
-        <div style="background: var(--color-primary);" class="text-white text-center py-3 px-4 text-sm font-semibold">
-            🚚 משלוח חינם לכל הארץ + מגבת פנים במתנה להזמנות מעל ₪500 🇮🇱
+        <div style="background: var(--color-primary);" class="text-white text-center py-3 px-4 text-sm font-semibold flex items-center justify-center gap-2">
+            <i data-lucide="truck" class="icon-sm"></i>
+            <span>משלוח חינם לכל הארץ + מגבת פנים במתנה להזמנות מעל 500 ש"ח</span>
         </div>
     </div>
 
@@ -403,19 +366,19 @@
                 <div class="md:sticky md:top-32">
                     <div id="slider-container" class="md:rounded-2xl border-b md:border border-gray-100">
                         <div class="slider-scroll-area" id="slider-track">
-                            <div class="slider-item"><img src="images/hero-towel-lavender.png" alt="מגבת RIGURGITO לבנדר"></div>
-                            <div class="slider-item"><img src="images/towel-striped-lavender.png" alt="מגבת RIGURGITO פסים"></div>
-                            <div class="slider-item"><img src="images/bathroom-lifestyle.png" alt="מגבות RIGURGITO באמבטיה"></div>
-                            <div class="slider-item"><img src="images/silver-technology.png" alt="טכנולוגיית סיבי כסף"></div>
-                            <div class="slider-item"><img src="images/before-after.png" alt="לפני ואחרי"></div>
+                            <div class="slider-item"><img src="images/product-1.jpg" alt="מגבת RIGURGITO לבנדר" id="main-product-img"></div>
+                            <div class="slider-item"><img src="images/product-25.jpg" alt="מגבת RIGURGITO פסים"></div>
+                            <div class="slider-item"><img src="images/product-5.jpg" alt="מגבות RIGURGITO צבעים"></div>
+                            <div class="slider-item"><img src="images/product-2.jpg" alt="מגבות RIGURGITO"></div>
+                            <div class="slider-item"><img src="images/product-26.jpg" alt="מגבות RIGURGITO קולקציה"></div>
                         </div>
                     </div>
                     <div class="flex gap-2 mt-3 overflow-x-auto pb-2 px-4 md:px-0 scrollbar-hide">
-                        <img onclick="jumpTo(0)" src="images/hero-towel-lavender.png" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer thumb-active object-cover">
-                        <img onclick="jumpTo(1)" src="images/towel-striped-lavender.png" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
-                        <img onclick="jumpTo(2)" src="images/bathroom-lifestyle.png" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
-                        <img onclick="jumpTo(3)" src="images/silver-technology.png" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
-                        <img onclick="jumpTo(4)" src="images/before-after.png" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
+                        <img onclick="jumpTo(0)" src="images/product-1.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer thumb-active object-cover">
+                        <img onclick="jumpTo(1)" src="images/product-25.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
+                        <img onclick="jumpTo(2)" src="images/product-5.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
+                        <img onclick="jumpTo(3)" src="images/product-2.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
+                        <img onclick="jumpTo(4)" src="images/product-26.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
                     </div>
                 </div>
             </div>
@@ -432,27 +395,27 @@
                 <!-- Key Benefits -->
                 <div class="space-y-2 text-sm">
                     <div class="flex items-center gap-2">
-                        <span class="text-green-600">✓</span>
+                        <i data-lucide="check" class="icon-sm text-green-600"></i>
                         <span>מחסלת 99% מהחיידקים שגורמים לריח ולגירויים</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="text-green-600">✓</span>
+                        <i data-lucide="check" class="icon-sm text-green-600"></i>
                         <span>מתייבשת פי 2 מהר יותר - פחות עובש, פחות ריח</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="text-green-600">✓</span>
+                        <i data-lucide="check" class="icon-sm text-green-600"></i>
                         <span>מושלמת לעור רגיש ונוטה לאקנה</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="text-green-600">✓</span>
+                        <i data-lucide="check" class="icon-sm text-green-600"></i>
                         <span>חוסכת כביסות וזמן - פעם בשבוע מספיק</span>
                     </div>
                 </div>
 
                 <!-- Price Display -->
                 <div class="flex items-center gap-3 py-3 border-y border-gray-100">
-                    <span class="price-item" id="display-price">₪379</span>
-                    <span class="compare-price" id="display-compare-price">₪549</span>
+                    <span class="price-item" id="display-price">379 ש"ח</span>
+                    <span class="compare-price" id="display-compare-price">549 ש"ח</span>
                     <span class="text-xs font-bold px-2 py-1 rounded" style="background: var(--color-cream); color: var(--color-primary);" id="display-savings">חסכון של 31%</span>
                 </div>
 
@@ -460,10 +423,10 @@
                 <div class="space-y-3">
                     <p class="font-bold text-gray-700">צבע: <span id="selected-color-name" class="font-normal text-gray-500">לבנדר</span></p>
                     <div class="flex gap-3 flex-wrap">
-                        <div class="color-swatch active" style="background: #C8A2C8;" data-color="lavender" data-name="לבנדר" onclick="selectColor(this)"></div>
-                        <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #ddd;" data-color="white" data-name="לבן" onclick="selectColor(this)"></div>
-                        <div class="color-swatch" style="background: #9CA38F;" data-color="sage" data-name="ירוק מרווה" onclick="selectColor(this)"></div>
-                        <div class="color-swatch" style="background: #4A4A4A;" data-color="charcoal" data-name="אפור פחם" onclick="selectColor(this)"></div>
+                        <div class="color-swatch active" style="background: #C8A2C8;" data-color="lavender" data-name="לבנדר" onclick="selectColor(this)" title="לבנדר"></div>
+                        <div class="color-swatch" style="background: #9CA38F;" data-color="mint" data-name="מנטה" onclick="selectColor(this)" title="מנטה"></div>
+                        <div class="color-swatch" style="background: #6B8CC7;" data-color="blue" data-name="כחול" onclick="selectColor(this)" title="כחול"></div>
+                        <div class="color-swatch" style="background: #F5E6D3; border: 1px solid #ddd;" data-color="cream" data-name="קרם" onclick="selectColor(this)" title="קרם"></div>
                     </div>
                 </div>
 
@@ -480,10 +443,8 @@
                 <div class="space-y-3">
                     <p class="font-bold text-gray-700">מידה:</p>
                     <div class="flex gap-2 flex-wrap">
-                        <button class="variant-btn" data-size="face" data-price-mod="0" onclick="selectSize(this)">פנים (30×50)</button>
-                        <button class="variant-btn" data-size="hand" data-price-mod="40" onclick="selectSize(this)">ידיים (50×100)</button>
-                        <button class="variant-btn active" data-size="bath" data-price-mod="80" onclick="selectSize(this)">רחצה (70×140)</button>
-                        <button class="variant-btn" data-size="xl" data-price-mod="120" onclick="selectSize(this)">XL (100×180)</button>
+                        <button class="variant-btn" data-size="small" onclick="selectSize(this)">קטנה (34×75)</button>
+                        <button class="variant-btn active" data-size="large" onclick="selectSize(this)">גדולה (70×140)</button>
                     </div>
                 </div>
 
@@ -491,17 +452,17 @@
                 <div class="space-y-3" id="pack-selector">
                     <p class="font-bold text-gray-700">בחרי את הכמות:</p>
                     
-                    <div class="quantity-break" onclick="activatePack(0)" data-base-price="299" data-compare="449">
+                    <div class="quantity-break" onclick="activatePack(0)">
                         <div class="flex justify-between items-center pointer-events-none">
                             <div class="flex items-center">
                                 <span class="radio-dot"></span>
                                 <span class="font-bold text-lg">מגבת אחת</span>
                             </div>
-                            <span class="font-bold text-lg pack-price">₪379</span>
+                            <span class="font-bold text-lg pack-price">379 ש"ח</span>
                         </div>
                     </div>
                     
-                    <div class="quantity-break active" onclick="activatePack(1)" data-base-price="539" data-compare="898" data-discount="10">
+                    <div class="quantity-break active" onclick="activatePack(1)">
                         <div class="badge-tag">הכי נמכר</div>
                         <div class="flex justify-between items-center pointer-events-none">
                             <div class="flex items-center">
@@ -512,13 +473,13 @@
                                 </div>
                             </div>
                             <div class="text-left">
-                                <span class="font-bold text-lg block pack-price">₪679</span>
+                                <span class="font-bold text-lg block pack-price">682 ש"ח</span>
                                 <span class="text-xs text-green-600">חסכי 10%</span>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="quantity-break" onclick="activatePack(2)" data-base-price="717" data-compare="1347" data-discount="20">
+                    <div class="quantity-break" onclick="activatePack(2)">
                         <div class="badge-tag green">הכי משתלם</div>
                         <div class="flex justify-between items-center pointer-events-none">
                             <div class="flex items-center">
@@ -529,7 +490,7 @@
                                 </div>
                             </div>
                             <div class="text-left">
-                                <span class="font-bold text-lg block pack-price">₪949</span>
+                                <span class="font-bold text-lg block pack-price">910 ש"ח</span>
                                 <span class="text-xs text-green-600">חסכי 20%</span>
                             </div>
                         </div>
@@ -538,9 +499,12 @@
 
                 <!-- Shipping Protection -->
                 <div class="border border-dashed border-gray-300 p-4 rounded-xl flex items-center justify-between gap-4 text-right" style="background: var(--color-cream);">
-                    <div>
-                        <p class="text-sm font-bold">ביטוח משלוח מפני נזקים ואובדן</p>
-                        <p class="text-xs text-gray-600">תוספת של ₪9.90 בלבד</p>
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="shield-check" class="icon text-gray-600"></i>
+                        <div>
+                            <p class="text-sm font-bold">ביטוח משלוח מפני נזקים ואובדן</p>
+                            <p class="text-xs text-gray-600">תוספת של 9.90 ש"ח בלבד</p>
+                        </div>
                     </div>
                     <label class="switch">
                         <input type="checkbox" id="shipping-protection" checked>
@@ -554,63 +518,66 @@
                 </button>
                 
                 <!-- Trust Elements -->
-                <div class="flex justify-center gap-6 text-xs text-gray-500 pt-2">
-                    <span>🚚 משלוח חינם</span>
+                <div class="flex justify-center gap-4 text-xs text-gray-500 pt-2">
+                    <span class="flex items-center gap-1"><i data-lucide="truck" class="icon-sm"></i> משלוח חינם</span>
                     <span>•</span>
-                    <span>↩️ 30 יום להחזרה</span>
+                    <span class="flex items-center gap-1"><i data-lucide="refresh-cw" class="icon-sm"></i> 30 יום להחזרה</span>
                     <span>•</span>
-                    <span>🔒 תשלום מאובטח</span>
+                    <span class="flex items-center gap-1"><i data-lucide="lock" class="icon-sm"></i> תשלום מאובטח</span>
                 </div>
 
                 <!-- Payment Methods -->
                 <div class="flex justify-center gap-4 pt-2 opacity-60">
-                    <span class="text-2xl">💳</span>
-                    <span class="text-2xl">🏦</span>
-                    <span class="text-2xl">📱</span>
+                    <i data-lucide="credit-card" class="icon-lg"></i>
+                    <i data-lucide="landmark" class="icon-lg"></i>
+                    <i data-lucide="smartphone" class="icon-lg"></i>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PROBLEM SECTION - What's in your towel -->
+    <!-- PROBLEM SECTION -->
     <section class="py-16 px-4" style="background: linear-gradient(180deg, #fef2f2 0%, #fff 100%);">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-10">
-                <p class="text-sm font-bold mb-2 text-red-500">🔬 בדיקת מעבדה חושפת</p>
+                <p class="text-sm font-bold mb-2 text-red-500 flex items-center justify-center gap-2">
+                    <i data-lucide="microscope" class="icon-sm"></i>
+                    בדיקת מעבדה חושפת
+                </p>
                 <h2 class="text-3xl font-black mb-4" style="color: var(--color-primary);">מה נמצא במגבת הרגילה שלך?</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">אחרי 48 שעות בלבד של שימוש, המגבת שלך הופכת לבית גידול לחיידקים. הנה מה שבדיקת מעבדה מצאה:</p>
             </div>
 
             <div class="contaminant-grid max-w-lg mx-auto mb-10">
                 <div class="contaminant-item">
-                    <div class="contaminant-icon">🦠</div>
+                    <div class="contaminant-icon"><i data-lucide="bug" class="icon-xl"></i></div>
                     <div class="contaminant-name">חיידקים</div>
                 </div>
                 <div class="contaminant-item">
-                    <div class="contaminant-icon">🍄</div>
+                    <div class="contaminant-icon"><i data-lucide="cloud" class="icon-xl"></i></div>
                     <div class="contaminant-name">עובש</div>
                 </div>
                 <div class="contaminant-item">
-                    <div class="contaminant-icon">🔬</div>
+                    <div class="contaminant-icon"><i data-lucide="circle-dot" class="icon-xl"></i></div>
                     <div class="contaminant-name">שמרים</div>
                 </div>
                 <div class="contaminant-item">
-                    <div class="contaminant-icon">💀</div>
+                    <div class="contaminant-icon"><i data-lucide="skull" class="icon-xl"></i></div>
                     <div class="contaminant-name">E.Coli</div>
                 </div>
                 <div class="contaminant-item">
-                    <div class="contaminant-icon">😷</div>
+                    <div class="contaminant-icon"><i data-lucide="alert-triangle" class="icon-xl"></i></div>
                     <div class="contaminant-name">סטפילוקוק</div>
                 </div>
                 <div class="contaminant-item">
-                    <div class="contaminant-icon">⚠️</div>
+                    <div class="contaminant-icon"><i data-lucide="circle-alert" class="icon-xl"></i></div>
                     <div class="contaminant-name">פטריות</div>
                 </div>
             </div>
 
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-red-100 max-w-2xl mx-auto">
                 <div class="flex gap-4 items-start">
-                    <div class="text-3xl">🔬</div>
+                    <i data-lucide="flask-conical" class="icon-xl text-red-500 flex-shrink-0"></i>
                     <div>
                         <p class="font-bold text-lg mb-2" style="color: var(--color-primary);">מחקרים מדעיים הראו:</p>
                         <p class="text-gray-600 text-sm leading-relaxed">מגבת רגילה יכולה להכיל <strong>מיליוני חיידקים</strong> אחרי 48 שעות בלבד. הלחות שנשארת בבד יוצרת סביבה אידיאלית לחיידקים שגורמים ל<strong>ריח רע, גירויים בעור, פצעונים</strong> ואפילו זיהומים. כל פעם שאת מתנגבת - את מורחת אותם חזרה על הגוף.</p>
@@ -628,7 +595,7 @@
         </div>
     </section>
 
-    <!-- SOLUTION SECTION - With vs Without -->
+    <!-- SOLUTION SECTION -->
     <section class="py-16 px-4" style="background: var(--color-cream);">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-12">
@@ -641,32 +608,32 @@
                 <!-- Without RIGURGITO -->
                 <div class="comparison-card bad">
                     <div class="text-center mb-6">
-                        <span class="text-4xl">😰</span>
+                        <i data-lucide="frown" class="icon-xl mx-auto text-red-500"></i>
                         <h3 class="font-black text-xl mt-3" style="color: var(--color-danger);">בלי RIGURGITO</h3>
                     </div>
                     <div class="space-y-3">
                         <div class="comparison-item">
-                            <div class="comparison-icon">✕</div>
+                            <div class="comparison-icon"><i data-lucide="x" class="icon-sm"></i></div>
                             <span>התנגבות עם מיליוני חיידקים כל יום</span>
                         </div>
                         <div class="comparison-item">
-                            <div class="comparison-icon">✕</div>
+                            <div class="comparison-icon"><i data-lucide="x" class="icon-sm"></i></div>
                             <span>ריח רע אחרי יום-יומיים</span>
                         </div>
                         <div class="comparison-item">
-                            <div class="comparison-icon">✕</div>
+                            <div class="comparison-icon"><i data-lucide="x" class="icon-sm"></i></div>
                             <span>גירויים בעור, אקנה ופצעונים</span>
                         </div>
                         <div class="comparison-item">
-                            <div class="comparison-icon">✕</div>
+                            <div class="comparison-icon"><i data-lucide="x" class="icon-sm"></i></div>
                             <span>כביסות אינסופיות כל 2-3 ימים</span>
                         </div>
                         <div class="comparison-item">
-                            <div class="comparison-icon">✕</div>
+                            <div class="comparison-icon"><i data-lucide="x" class="icon-sm"></i></div>
                             <span>עובש ולחות שלא מתייבשת</span>
                         </div>
                         <div class="comparison-item">
-                            <div class="comparison-icon">✕</div>
+                            <div class="comparison-icon"><i data-lucide="x" class="icon-sm"></i></div>
                             <span>מוצרי טיפוח לא עובדים כמו שצריך</span>
                         </div>
                     </div>
@@ -675,32 +642,32 @@
                 <!-- With RIGURGITO -->
                 <div class="comparison-card good">
                     <div class="text-center mb-6">
-                        <span class="text-4xl">😊</span>
-                        <h3 class="font-black text-xl mt-3" style="color: #16a34a;">עם RIGURGITO</h3>
+                        <i data-lucide="smile" class="icon-xl mx-auto text-green-500"></i>
+                        <h3 class="font-black text-xl mt-3" style="color: var(--color-success);">עם RIGURGITO</h3>
                     </div>
                     <div class="space-y-3">
                         <div class="comparison-item">
-                            <div class="comparison-icon">✓</div>
+                            <div class="comparison-icon"><i data-lucide="check" class="icon-sm"></i></div>
                             <span>99% מהחיידקים מחוסלים אוטומטית</span>
                         </div>
                         <div class="comparison-item">
-                            <div class="comparison-icon">✓</div>
+                            <div class="comparison-icon"><i data-lucide="check" class="icon-sm"></i></div>
                             <span>רעננות עד 7 ימים מלאים</span>
                         </div>
                         <div class="comparison-item">
-                            <div class="comparison-icon">✓</div>
+                            <div class="comparison-icon"><i data-lucide="check" class="icon-sm"></i></div>
                             <span>עור בריא, נקי ומזוהר</span>
                         </div>
                         <div class="comparison-item">
-                            <div class="comparison-icon">✓</div>
+                            <div class="comparison-icon"><i data-lucide="check" class="icon-sm"></i></div>
                             <span>כביסה פעם בשבוע מספיקה</span>
                         </div>
                         <div class="comparison-item">
-                            <div class="comparison-icon">✓</div>
+                            <div class="comparison-icon"><i data-lucide="check" class="icon-sm"></i></div>
                             <span>מתייבשת פי 2 מהר יותר</span>
                         </div>
                         <div class="comparison-item">
-                            <div class="comparison-icon">✓</div>
+                            <div class="comparison-icon"><i data-lucide="check" class="icon-sm"></i></div>
                             <span>תחושת רכות כמו משי על העור</span>
                         </div>
                     </div>
@@ -760,15 +727,24 @@
                 </div>
                 <div class="space-y-6 text-right">
                     <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">🧬 יוני כסף טבעיים</h3>
+                        <div class="flex items-center gap-3 mb-2">
+                            <i data-lucide="dna" class="icon text-purple-500"></i>
+                            <h3 class="font-bold text-lg" style="color: var(--color-primary);">יוני כסף טבעיים</h3>
+                        </div>
                         <p class="text-gray-600 text-sm">כשהמגבת נרטבת, יוני הכסף משתחררים ותוקפים את דופן התא של החיידקים. הם משמידים 99% מהחיידקים שגורמים לריח ולגירויים.</p>
                     </div>
                     <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">💨 ייבוש מהיר ×2</h3>
+                        <div class="flex items-center gap-3 mb-2">
+                            <i data-lucide="wind" class="icon text-blue-500"></i>
+                            <h3 class="font-bold text-lg" style="color: var(--color-primary);">ייבוש מהיר ×2</h3>
+                        </div>
                         <p class="text-gray-600 text-sm">מבנה הסיבים המיוחד מאפשר ייבוש מהיר פי 2 ממגבת רגילה. פחות לחות = פחות סביבה לחיידקים = פחות ריח.</p>
                     </div>
                     <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">♻️ עמידות לאורך זמן</h3>
+                        <div class="flex items-center gap-3 mb-2">
+                            <i data-lucide="infinity" class="icon text-green-500"></i>
+                            <h3 class="font-bold text-lg" style="color: var(--color-primary);">עמידות לאורך זמן</h3>
+                        </div>
                         <p class="text-gray-600 text-sm">הטכנולוגיה האנטי בקטריאלית נשמרת לאורך מאות כביסות. לא נשטפת, לא נפגמת - עובדת שנים.</p>
                     </div>
                 </div>
@@ -784,22 +760,22 @@
             </div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="bg-gradient-to-br from-purple-50 to-white p-6 rounded-2xl border border-purple-100">
-                    <div class="text-3xl mb-3">✨</div>
+                    <i data-lucide="sparkles" class="icon-xl mb-3 text-purple-500"></i>
                     <h3 class="font-bold text-lg mb-2">חווית התנגבות ממכרת</h3>
                     <p class="text-gray-600 text-sm">רכות כמו משי, ספיגה מושלמת, תחושה של ספא ביתי אחרי כל מקלחת</p>
                 </div>
                 <div class="bg-gradient-to-br from-green-50 to-white p-6 rounded-2xl border border-green-100">
-                    <div class="text-3xl mb-3">💚</div>
+                    <i data-lucide="heart-pulse" class="icon-xl mb-3 text-green-500"></i>
                     <h3 class="font-bold text-lg mb-2">שמירה על בריאות העור</h3>
                     <p class="text-gray-600 text-sm">אם לא היית משתמשת במגבת מלאת חיידקים על הפנים - למה להשתמש בה על הגוף?</p>
                 </div>
                 <div class="bg-gradient-to-br from-blue-50 to-white p-6 rounded-2xl border border-blue-100">
-                    <div class="text-3xl mb-3">💰</div>
+                    <i data-lucide="piggy-bank" class="icon-xl mb-3 text-blue-500"></i>
                     <h3 class="font-bold text-lg mb-2">חסכון בהוצאות</h3>
                     <p class="text-gray-600 text-sm">פחות כביסות, פחות מים, פחות חשמל, פחות החלפת מגבות - החזר ההשקעה תוך חודשים</p>
                 </div>
                 <div class="bg-gradient-to-br from-orange-50 to-white p-6 rounded-2xl border border-orange-100">
-                    <div class="text-3xl mb-3">⏰</div>
+                    <i data-lucide="clock" class="icon-xl mb-3 text-orange-500"></i>
                     <h3 class="font-bold text-lg mb-2">חסכון בזמן</h3>
                     <p class="text-gray-600 text-sm">כביסה פעם בשבוע במקום כל 2-3 ימים. יותר זמן לדברים החשובים באמת</p>
                 </div>
@@ -815,47 +791,89 @@
                 <h2 class="text-3xl font-black" style="color: var(--color-primary);">מה הלקוחות אומרות</h2>
             </div>
             <div class="flex items-center justify-center gap-2 mb-10">
-                <span class="text-yellow-400 text-xl">★★★★★</span>
+                <div class="flex text-yellow-400">
+                    <i data-lucide="star" class="icon-sm fill-current"></i>
+                    <i data-lucide="star" class="icon-sm fill-current"></i>
+                    <i data-lucide="star" class="icon-sm fill-current"></i>
+                    <i data-lucide="star" class="icon-sm fill-current"></i>
+                    <i data-lucide="star" class="icon-sm fill-current"></i>
+                </div>
                 <span class="font-bold">4.9/5</span>
                 <span class="text-gray-500 text-sm">(847 ביקורות)</span>
             </div>
             
             <div class="grid md:grid-cols-3 gap-5">
                 <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
+                    <div class="review-stars flex text-yellow-400 mb-2">
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                    </div>
                     <p class="review-text">"הייתי סקפטית לגמרי. חשבתי שזה עוד טריק שיווקי. אחרי שבוע שלם בלי ריח - אני מודה שטעיתי. הזמנתי עוד 3 לכל המשפחה."</p>
                     <p class="review-author">— נועה מ., תל אביב</p>
-                    <div class="review-verified">✓ רכישה מאומתת</div>
+                    <div class="review-verified"><i data-lucide="badge-check" class="icon-sm"></i> רכישה מאומתת</div>
                 </div>
                 <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
+                    <div class="review-stars flex text-yellow-400 mb-2">
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                    </div>
                     <p class="review-text">"יש לי עור רגיש ומגבות רגילות תמיד גרמו לי לגירויים ופצעונים. מאז RIGURGITO - העור שלי נקי ובריא. שווה כל שקל."</p>
                     <p class="review-author">— מיכל ר., רמת גן</p>
-                    <div class="review-verified">✓ רכישה מאומתת</div>
+                    <div class="review-verified"><i data-lucide="badge-check" class="icon-sm"></i> רכישה מאומתת</div>
                 </div>
                 <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
+                    <div class="review-stars flex text-yellow-400 mb-2">
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                    </div>
                     <p class="review-text">"הרכות מטורפת. בהתחלה קניתי בגלל האנטי בקטריאלי, אבל התאהבתי בתחושה. זו המגבת הכי נעימה שהיתה לי אי פעם."</p>
                     <p class="review-author">— שירה כ., ירושלים</p>
-                    <div class="review-verified">✓ רכישה מאומתת</div>
+                    <div class="review-verified"><i data-lucide="badge-check" class="icon-sm"></i> רכישה מאומתת</div>
                 </div>
                 <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
+                    <div class="review-stars flex text-yellow-400 mb-2">
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                    </div>
                     <p class="review-text">"גרה בדירה קטנה בלי מרפסת. המגבות תמיד היו מסריחות. עכשיו? מתייבשות מהר ונשארות רעננות. לא מחזירה אותן בשום מצב."</p>
                     <p class="review-author">— רותם א., הרצליה</p>
-                    <div class="review-verified">✓ רכישה מאומתת</div>
+                    <div class="review-verified"><i data-lucide="badge-check" class="icon-sm"></i> רכישה מאומתת</div>
                 </div>
                 <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
+                    <div class="review-stars flex text-yellow-400 mb-2">
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                    </div>
                     <p class="review-text">"היססתי בגלל המחיר. אבל כשחישבתי כמה אני מוציאה על כביסות, מגבות חדשות, ומוצרים לעור - זה ממש משתלם."</p>
                     <p class="review-author">— יעל ש., נתניה</p>
-                    <div class="review-verified">✓ רכישה מאומתת</div>
+                    <div class="review-verified"><i data-lucide="badge-check" class="icon-sm"></i> רכישה מאומתת</div>
                 </div>
                 <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
-                    <p class="review-text">"הבעל שלי חשב שאני מטורפת לקנות מגבת יקרה. אחרי שבוע הוא ביקש שאזמין גם לו. עכשיו כל הבית עם RIGURGITO 😂"</p>
+                    <div class="review-stars flex text-yellow-400 mb-2">
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                        <i data-lucide="star" class="icon-sm fill-current"></i>
+                    </div>
+                    <p class="review-text">"הבעל שלי חשב שאני מטורפת לקנות מגבת יקרה. אחרי שבוע הוא ביקש שאזמין גם לו. עכשיו כל הבית עם RIGURGITO"</p>
                     <p class="review-author">— דנה ל., חיפה</p>
-                    <div class="review-verified">✓ רכישה מאומתת</div>
+                    <div class="review-verified"><i data-lucide="badge-check" class="icon-sm"></i> רכישה מאומתת</div>
                 </div>
             </div>
         </div>
@@ -882,38 +900,33 @@
                     <tbody>
                         <tr class="border-t border-gray-100">
                             <td class="p-4 text-right font-medium">רעננות</td>
-                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">עד 7 ימים ✓</td>
-                            <td class="p-4 text-red-400">1-2 ימים ✗</td>
+                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">עד 7 ימים</td>
+                            <td class="p-4 text-red-400">1-2 ימים</td>
                         </tr>
                         <tr class="border-t border-gray-100 bg-gray-50">
                             <td class="p-4 text-right font-medium">חיידקים</td>
-                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">99% מחוסלים ✓</td>
-                            <td class="p-4 text-red-400">מתרבים במהירות ✗</td>
+                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">99% מחוסלים</td>
+                            <td class="p-4 text-red-400">מתרבים במהירות</td>
                         </tr>
                         <tr class="border-t border-gray-100">
                             <td class="p-4 text-right font-medium">ייבוש</td>
-                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">מהיר ×2 ✓</td>
-                            <td class="p-4 text-red-400">איטי ✗</td>
+                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">מהיר ×2</td>
+                            <td class="p-4 text-red-400">איטי</td>
                         </tr>
                         <tr class="border-t border-gray-100 bg-gray-50">
                             <td class="p-4 text-right font-medium">עור רגיש</td>
-                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">מתאימה במיוחד ✓</td>
-                            <td class="p-4 text-red-400">עלולה לגרות ✗</td>
+                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">מתאימה במיוחד</td>
+                            <td class="p-4 text-red-400">עלולה לגרות</td>
                         </tr>
                         <tr class="border-t border-gray-100">
                             <td class="p-4 text-right font-medium">תחזוקה</td>
-                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">פעם בשבוע ✓</td>
-                            <td class="p-4 text-red-400">כל 2-3 ימים ✗</td>
+                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">פעם בשבוע</td>
+                            <td class="p-4 text-red-400">כל 2-3 ימים</td>
                         </tr>
                         <tr class="border-t border-gray-100 bg-gray-50">
                             <td class="p-4 text-right font-medium">ריח</td>
-                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">ללא ריח ✓</td>
-                            <td class="p-4 text-red-400">מסריחה מהר ✗</td>
-                        </tr>
-                        <tr class="border-t border-gray-100">
-                            <td class="p-4 text-right font-medium">רכות</td>
-                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">כמו משי ✓</td>
-                            <td class="p-4 text-red-400">מתקשה עם הזמן ✗</td>
+                            <td class="p-4 text-green-600 font-bold border-l border-r border-gray-100">ללא ריח</td>
+                            <td class="p-4 text-red-400">מסריחה מהר</td>
                         </tr>
                     </tbody>
                 </table>
@@ -928,7 +941,7 @@
             <details class="group bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm" open>
                 <summary class="flex justify-between items-center p-5 cursor-pointer font-bold">
                     <span>איך הטכנולוגיה האנטי בקטריאלית עובדת?</span>
-                    <span class="group-open:rotate-180 transition-transform text-gray-400">▼</span>
+                    <i data-lucide="chevron-down" class="icon group-open:rotate-180 transition-transform text-gray-400"></i>
                 </summary>
                 <div class="px-5 pb-5 text-gray-600 border-t border-gray-100 pt-4 text-sm leading-relaxed">
                     סיבי כסף טבעיים שזורים ישירות בתוך בד הכותנה. כשהמגבת נרטבת, יוני הכסף משתחררים ותוקפים את דופן התא של החיידקים - משמידים 99% מהם. הטכנולוגיה פעילה תמיד ונשמרת לאורך כל חיי המגבת.
@@ -937,7 +950,7 @@
             <details class="group bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
                 <summary class="flex justify-between items-center p-5 cursor-pointer font-bold">
                     <span>האם זה בטוח לעור רגיש ולתינוקות?</span>
-                    <span class="group-open:rotate-180 transition-transform text-gray-400">▼</span>
+                    <i data-lucide="chevron-down" class="icon group-open:rotate-180 transition-transform text-gray-400"></i>
                 </summary>
                 <div class="px-5 pb-5 text-gray-600 border-t border-gray-100 pt-4 text-sm leading-relaxed">
                     בהחלט! הכסף הוא חומר טבעי והיפואלרגני שמשמש ברפואה כבר אלפי שנים. המגבת מתאימה במיוחד לבעלות עור רגיש, נוטה לאקנה, ואפילו לתינוקות - כי היא מונעת את הצטברות החיידקים שגורמים לגירויים ולפריחות.
@@ -946,16 +959,16 @@
             <details class="group bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
                 <summary class="flex justify-between items-center p-5 cursor-pointer font-bold">
                     <span>כמה זמן המשלוח לוקח?</span>
-                    <span class="group-open:rotate-180 transition-transform text-gray-400">▼</span>
+                    <i data-lucide="chevron-down" class="icon group-open:rotate-180 transition-transform text-gray-400"></i>
                 </summary>
                 <div class="px-5 pb-5 text-gray-600 border-t border-gray-100 pt-4 text-sm leading-relaxed">
-                    משלוח רגיל: 7-14 ימי עסקים (רוב ההזמנות מגיעות מהר יותר). משלוח אקספרס: 3-5 ימי עסקים. משלוח חינם לכל הארץ להזמנות מעל ₪299.
+                    משלוח רגיל: 7-14 ימי עסקים (רוב ההזמנות מגיעות מהר יותר). משלוח אקספרס: 3-5 ימי עסקים. משלוח חינם לכל הארץ להזמנות מעל 299 ש"ח.
                 </div>
             </details>
             <details class="group bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
                 <summary class="flex justify-between items-center p-5 cursor-pointer font-bold">
                     <span>מה אם לא אהיה מרוצה?</span>
-                    <span class="group-open:rotate-180 transition-transform text-gray-400">▼</span>
+                    <i data-lucide="chevron-down" class="icon group-open:rotate-180 transition-transform text-gray-400"></i>
                 </summary>
                 <div class="px-5 pb-5 text-gray-600 border-t border-gray-100 pt-4 text-sm leading-relaxed">
                     <strong>30 יום להחזרה מלאה ללא שאלות.</strong> אם לא התאהבת במגבת - שלחי אותה חזרה ונחזיר לך את הכסף בשלמות. בלי סיפורים, בלי התחמקויות. אנחנו בטוחות שתאהבי אותה.
@@ -964,19 +977,10 @@
             <details class="group bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
                 <summary class="flex justify-between items-center p-5 cursor-pointer font-bold">
                     <span>איך מטפלים במגבת?</span>
-                    <span class="group-open:rotate-180 transition-transform text-gray-400">▼</span>
+                    <i data-lucide="chevron-down" class="icon group-open:rotate-180 transition-transform text-gray-400"></i>
                 </summary>
                 <div class="px-5 pb-5 text-gray-600 border-t border-gray-100 pt-4 text-sm leading-relaxed">
                     כמו כל מגבת איכותית - כביסה במים עד 60 מעלות, ללא מרכך כביסה (פוגע בספיגה), ייבוש בטמפרטורה בינונית או תלייה. הטכנולוגיה האנטי בקטריאלית נשמרת לאורך מאות כביסות - לא נשטפת ולא נפגמת.
-                </div>
-            </details>
-            <details class="group bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-                <summary class="flex justify-between items-center p-5 cursor-pointer font-bold">
-                    <span>כמה זמן הטכנולוגיה נשמרת?</span>
-                    <span class="group-open:rotate-180 transition-transform text-gray-400">▼</span>
-                </summary>
-                <div class="px-5 pb-5 text-gray-600 border-t border-gray-100 pt-4 text-sm leading-relaxed">
-                    סיבי הכסף שזורים בתוך הבד ולא מצופים עליו - לכן הם לא נשחקים ולא נשטפים. הטכנולוגיה פעילה לאורך כל חיי המגבת, גם אחרי מאות כביסות.
                 </div>
             </details>
         </div>
@@ -987,15 +991,16 @@
         <div class="max-w-2xl mx-auto">
             <h2 class="text-3xl font-black text-white mb-4">מוכנה למגבת שבאמת נשארת רעננה?</h2>
             <p class="text-white/70 mb-8">הצטרפי לאלפי נשים שכבר עשו את השדרוג הפשוט הזה</p>
-            <button onclick="document.getElementById('product-section').scrollIntoView({behavior:'smooth'})" class="bg-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-gray-100 transition" style="color: var(--color-primary);">
-                לבחירת המארז שלי ←
+            <button onclick="document.getElementById('product-section').scrollIntoView({behavior:'smooth'})" class="bg-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-gray-100 transition flex items-center justify-center gap-2 mx-auto" style="color: var(--color-primary);">
+                <span>לבחירת המארז שלי</span>
+                <i data-lucide="arrow-left" class="icon"></i>
             </button>
-            <div class="flex justify-center gap-6 text-white/60 text-sm mt-6">
-                <span>🚚 משלוח חינם</span>
+            <div class="flex justify-center gap-4 text-white/60 text-sm mt-6">
+                <span class="flex items-center gap-1"><i data-lucide="truck" class="icon-sm"></i> משלוח חינם</span>
                 <span>•</span>
-                <span>↩️ 30 יום להחזרה</span>
+                <span class="flex items-center gap-1"><i data-lucide="refresh-cw" class="icon-sm"></i> 30 יום להחזרה</span>
                 <span>•</span>
-                <span>🔒 תשלום מאובטח</span>
+                <span class="flex items-center gap-1"><i data-lucide="lock" class="icon-sm"></i> תשלום מאובטח</span>
             </div>
         </div>
     </section>
@@ -1016,7 +1021,7 @@
     <div class="sticky-btn" id="sticky-cta">
         <div class="flex items-center justify-between gap-3">
             <div class="text-right">
-                <div class="font-bold text-lg" id="sticky-price">₪679</div>
+                <div class="font-bold text-lg" id="sticky-price">682 ש"ח</div>
                 <div class="text-xs text-gray-500" id="sticky-variant">זוג מגבות • לבנדר</div>
             </div>
             <button onclick="startUpsell()" class="cta-primary flex-1 py-3 rounded-xl text-lg font-bold">
@@ -1048,7 +1053,7 @@
                     </p>
                     <div class="space-y-3 pb-4">
                         <button onclick="handleUpsell(1, true)" class="w-full py-4 rounded-xl text-lg font-bold" style="background: var(--color-secondary); color: var(--color-primary);">
-                            כן, אני רוצה מהר יותר — ₪29
+                            כן, אני רוצה מהר יותר — 29 ש"ח
                         </button>
                         <button onclick="handleUpsell(1, false)" class="text-white/70 font-medium block mx-auto underline text-sm">
                             לא תודה, אמתין למשלוח רגיל
@@ -1059,7 +1064,7 @@
             <!-- Step 2: Extra Face Towel -->
             <div id="upsell-step-2" class="upsell-step-container hidden">
                 <div class="upsell-img-wrapper">
-                    <img src="images/face-towel.png" alt="מגבת פנים">
+                    <img src="images/product-11.jpg" alt="מגבת פנים">
                 </div>
                 <div class="px-6 shrink-0 space-y-4">
                     <p class="text-white text-center text-lg font-bold leading-relaxed">
@@ -1067,7 +1072,7 @@
                     </p>
                     <div class="space-y-3 pb-4">
                         <button onclick="handleUpsell(2, true)" class="w-full py-4 rounded-xl text-lg font-bold" style="background: var(--color-secondary); color: var(--color-primary);">
-                            להוסיף מגבת פנים — ₪89 במקום ₪149
+                            להוסיף מגבת פנים — 89 ש"ח במקום 149 ש"ח
                         </button>
                         <button onclick="handleUpsell(2, false)" class="text-white/70 font-medium block mx-auto underline text-sm">
                             לא תודה, להמשיך לתשלום
@@ -1079,31 +1084,41 @@
     </div>
 
     <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            updatePriceDisplay();
+        });
+
         // ============ PRODUCT DATA ============
         const productData = {
+            // Prices based on size: small = 179, large = 379
             basePrices: {
-                face: 149,    // 30×50
-                hand: 189,    // 50×100  
-                bath: 299,    // 70×140
-                xl: 379       // 100×180
+                small: 179,   // 34×75 cm
+                large: 379    // 70×140 cm
             },
-            compareMultiplier: 1.45,  // Compare price is 45% higher
+            compareMultiplier: 1.45,
             packMultipliers: [
                 { qty: 1, discount: 0, label: 'מגבת אחת', gift: '' },
                 { qty: 2, discount: 0.10, label: 'זוג מגבות', gift: '+ מגבת פנים במתנה' },
                 { qty: 3, discount: 0.20, label: 'מארז משפחתי (3)', gift: '+ 2 מגבות פנים במתנה' }
             ],
-            colors: {
-                lavender: { name: 'לבנדר', images: ['hero-towel-lavender.png', 'towel-striped-lavender.png'] },
-                white: { name: 'לבן', images: ['towel-white.png', 'towel-striped-grey.png'] },
-                sage: { name: 'ירוק מרווה', images: ['towel-sage.png', 'towel-striped-sage.png'] },
-                charcoal: { name: 'אפור פחם', images: ['towel-charcoal.png', 'towel-striped-charcoal.png'] }
+            // Real product images mapping
+            images: {
+                lavender: { solid: 'product-1.jpg', striped: 'product-28.jpg' },
+                mint: { solid: 'product-27.jpg', striped: 'product-31.jpg' },
+                blue: { solid: 'product-29.jpg', striped: 'product-33.jpg' },
+                cream: { solid: 'product-30.jpg', striped: 'product-34.jpg' }
+            },
+            colorNames: {
+                lavender: 'לבנדר',
+                mint: 'מנטה',
+                blue: 'כחול',
+                cream: 'קרם'
             },
             sizes: {
-                face: '(30×50)',
-                hand: '(50×100)',
-                bath: '(70×140)',
-                xl: '(100×180)'
+                small: '(34×75)',
+                large: '(70×140)'
             }
         };
 
@@ -1111,8 +1126,8 @@
         let state = {
             color: 'lavender',
             style: 'solid',
-            size: 'bath',
-            pack: 1  // 0, 1, or 2
+            size: 'large',
+            pack: 1
         };
 
         // ============ PRICE CALCULATION ============
@@ -1134,16 +1149,13 @@
         function updatePriceDisplay() {
             const { finalPrice, comparePrice, savingsPercent } = calculatePrice();
             
-            // Update main price display
-            document.getElementById('display-price').textContent = '₪' + finalPrice;
-            document.getElementById('display-compare-price').textContent = '₪' + comparePrice;
+            document.getElementById('display-price').textContent = finalPrice + ' ש"ח';
+            document.getElementById('display-compare-price').textContent = comparePrice + ' ש"ח';
             document.getElementById('display-savings').textContent = 'חסכון של ' + savingsPercent + '%';
             
-            // Update pack prices
             updatePackPrices();
-            
-            // Update sticky bar
             updateStickyBar();
+            updateProductImage();
         }
 
         function updatePackPrices() {
@@ -1159,7 +1171,7 @@
                 
                 const priceEl = pack.querySelector('.pack-price');
                 if (priceEl) {
-                    priceEl.textContent = '₪' + finalPrice;
+                    priceEl.textContent = finalPrice + ' ש"ח';
                 }
             });
         }
@@ -1167,11 +1179,25 @@
         function updateStickyBar() {
             const { finalPrice } = calculatePrice();
             const packInfo = productData.packMultipliers[state.pack];
-            const colorName = productData.colors[state.color].name;
+            const colorName = productData.colorNames[state.color];
             const sizeName = productData.sizes[state.size];
             
-            document.getElementById('sticky-price').textContent = '₪' + finalPrice;
+            document.getElementById('sticky-price').textContent = finalPrice + ' ש"ח';
             document.getElementById('sticky-variant').textContent = packInfo.label + ' • ' + colorName + ' ' + sizeName;
+        }
+
+        function updateProductImage() {
+            const imageData = productData.images[state.color];
+            const imageName = imageData[state.style];
+            const mainImg = document.getElementById('main-product-img');
+            const firstThumb = document.querySelector('.slider-thumb');
+            
+            if (mainImg && imageName) {
+                mainImg.src = 'images/' + imageName;
+                if (firstThumb) {
+                    firstThumb.src = 'images/' + imageName;
+                }
+            }
         }
 
         // ============ VARIANT SELECTION ============
@@ -1179,8 +1205,7 @@
             document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
             el.classList.add('active');
             state.color = el.dataset.color;
-            document.getElementById('selected-color-name').textContent = productData.colors[state.color].name;
-            updateSliderImages();
+            document.getElementById('selected-color-name').textContent = productData.colorNames[state.color];
             updatePriceDisplay();
         }
 
@@ -1188,7 +1213,7 @@
             document.querySelectorAll('.variant-btn[data-style]').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
             state.style = el.dataset.style;
-            updateSliderImages();
+            updateProductImage();
         }
 
         function selectSize(el) {
@@ -1203,20 +1228,6 @@
             packs.forEach((pack, i) => pack.classList.toggle('active', i === index));
             state.pack = index;
             updatePriceDisplay();
-        }
-
-        function updateSliderImages() {
-            const colorData = productData.colors[state.color];
-            const imageIndex = state.style === 'striped' ? 1 : 0;
-            const mainImage = colorData.images[imageIndex];
-            
-            // Update first slider image and first thumbnail
-            const firstSlide = document.querySelector('.slider-item img');
-            const firstThumb = document.querySelector('.slider-thumb');
-            if (firstSlide && mainImage) {
-                firstSlide.src = 'images/' + mainImage;
-                firstThumb.src = 'images/' + mainImage;
-            }
         }
 
         // ============ SLIDER ============
@@ -1257,7 +1268,6 @@
 
         // ============ UPSELL FLOW ============
         const upsellFlow = document.getElementById('upsell-flow');
-        let upsellStep = 1;
         let timerInterval;
 
         function startUpsell() {
@@ -1285,19 +1295,13 @@
                 document.getElementById('upsell-step-2').classList.add('slide-in-up');
                 document.getElementById('upsell-progress').style.width = '100%';
             } else {
-                // Go to checkout
                 clearInterval(timerInterval);
                 const { finalPrice } = calculatePrice();
-                alert('מעבר לתשלום... סה"כ: ₪' + finalPrice);
+                alert('מעבר לתשלום... סה"כ: ' + finalPrice + ' ש"ח');
                 upsellFlow.classList.remove('active');
                 document.body.style.overflow = '';
             }
         }
-
-        // ============ INIT ============
-        document.addEventListener('DOMContentLoaded', () => {
-            updatePriceDisplay();
-        });
     </script>
 </body>
 </html>
