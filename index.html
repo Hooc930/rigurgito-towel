@@ -335,13 +335,266 @@
             width: 100%;
             display: block;
         }
+
+        /* ============ SIDE CART STYLES ============ */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .side-cart {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background: white;
+            z-index: 210;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 30px rgba(0,0,0,0.15);
+        }
+        .side-cart.active {
+            transform: translateX(0);
+        }
+        .cart-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+        .cart-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .cart-item-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .cart-item-details {
+            flex: 1;
+            text-align: right;
+        }
+        .cart-item-title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .cart-item-variant {
+            font-size: 12px;
+            color: #666;
+        }
+        .cart-item-price {
+            font-weight: 800;
+            font-size: 15px;
+            color: var(--color-primary);
+            margin-top: 4px;
+        }
+        .cart-item-remove {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fee2e2;
+            color: var(--color-danger);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .cart-item-remove:hover {
+            background: var(--color-danger);
+            color: white;
+        }
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            background: #fafafa;
+        }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .cart-discount-badge {
+            background: #dcfce7;
+            color: var(--color-success);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .cart-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--color-danger);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-cart-btn {
+            position: relative;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Quantity selector */
+        .qty-selector {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+        .qty-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .qty-btn:hover {
+            background: #e5e5e5;
+        }
+        .qty-value {
+            width: 40px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        /* Volume discount display */
+        .volume-discount {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 12px;
+        }
+        .volume-discount-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--color-success);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .volume-tier {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 4px 0;
+        }
+        .volume-tier.active {
+            font-weight: 700;
+            color: var(--color-success);
+        }
+
+        /* Patent section */
+        .patent-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #fbbf24;
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #92400e;
+        }
     </style>
 </head>
 <body>
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+    
+    <!-- Side Cart -->
+    <div class="side-cart" id="side-cart">
+        <div class="cart-header">
+            <button onclick="closeCart()" style="background:none;border:none;cursor:pointer;">
+                <i data-lucide="x" class="icon-lg"></i>
+            </button>
+            <h3 class="text-xl font-bold">סל הקניות</h3>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="cart-empty" id="cart-empty">
+                <i data-lucide="shopping-bag" class="icon-xl mx-auto mb-3 opacity-30"></i>
+                <p>הסל ריק</p>
+                <p class="text-sm mt-1">הוסיפי מגבות לסל</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display:none;">
+            <div id="cart-discount-display"></div>
+            <div class="cart-total">
+                <span id="cart-total-price">0 ש"ח</span>
+                <span>סה"כ</span>
+            </div>
+            <button onclick="proceedToCheckout()" class="cta-primary w-full py-4 rounded-xl text-lg font-bold">
+                לתשלום מאובטח
+            </button>
+        </div>
+    </div>
+
     <!-- Header -->
     <div class="sticky-header-group shadow-sm">
-        <header class="py-3 flex justify-center bg-white border-b border-gray-100">
+        <header class="py-3 px-4 flex justify-between items-center bg-white border-b border-gray-100">
+            <div class="header-cart-btn" onclick="openCart()">
+                <i data-lucide="shopping-bag" class="icon-lg"></i>
+                <span class="cart-badge" id="cart-badge" style="display:none;">0</span>
+            </div>
             <div class="text-2xl font-black tracking-tight" style="color: var(--color-primary);">RIGURGITO</div>
+            <div style="width:40px;"></div>
         </header>
         <div style="background: var(--color-primary);" class="text-white text-center py-3 px-4 text-sm font-semibold flex items-center justify-center gap-2">
             <i data-lucide="truck" class="icon-sm"></i>
@@ -366,19 +619,34 @@
                 <div class="md:sticky md:top-32">
                     <div id="slider-container" class="md:rounded-2xl border-b md:border border-gray-100">
                         <div class="slider-scroll-area" id="slider-track">
-                            <div class="slider-item"><img src="images/product-1.jpg" alt="מגבת RIGURGITO לבנדר" id="main-product-img"></div>
-                            <div class="slider-item"><img src="images/product-25.jpg" alt="מגבת RIGURGITO פסים"></div>
+                            <div class="slider-item"><img src="images/product-25.jpg" alt="מגבת RIGURGITO" id="main-product-img"></div>
+                            <div class="slider-item"><img src="images/product-1.jpg" alt="מגבת RIGURGITO לבנדר"></div>
                             <div class="slider-item"><img src="images/product-5.jpg" alt="מגבות RIGURGITO צבעים"></div>
                             <div class="slider-item"><img src="images/product-2.jpg" alt="מגבות RIGURGITO"></div>
                             <div class="slider-item"><img src="images/product-26.jpg" alt="מגבות RIGURGITO קולקציה"></div>
                         </div>
+                        <!-- Slider Navigation Arrows -->
+                        <button class="absolute top-1/2 right-3 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center z-10 hover:bg-white transition" onclick="slideNext()">
+                            <i data-lucide="chevron-right" class="icon"></i>
+                        </button>
+                        <button class="absolute top-1/2 left-3 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center z-10 hover:bg-white transition" onclick="slidePrev()">
+                            <i data-lucide="chevron-left" class="icon"></i>
+                        </button>
+                        <!-- Slide Indicators -->
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                            <span class="slide-dot w-2 h-2 rounded-full bg-white/50 transition" data-index="0"></span>
+                            <span class="slide-dot w-2 h-2 rounded-full bg-white/50 transition" data-index="1"></span>
+                            <span class="slide-dot w-2 h-2 rounded-full bg-white/50 transition" data-index="2"></span>
+                            <span class="slide-dot w-2 h-2 rounded-full bg-white/50 transition" data-index="3"></span>
+                            <span class="slide-dot w-2 h-2 rounded-full bg-white/50 transition" data-index="4"></span>
+                        </div>
                     </div>
                     <div class="flex gap-2 mt-3 overflow-x-auto pb-2 px-4 md:px-0 scrollbar-hide">
-                        <img onclick="jumpTo(0)" src="images/product-1.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer thumb-active object-cover">
-                        <img onclick="jumpTo(1)" src="images/product-25.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
-                        <img onclick="jumpTo(2)" src="images/product-5.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
-                        <img onclick="jumpTo(3)" src="images/product-2.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
-                        <img onclick="jumpTo(4)" src="images/product-26.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover">
+                        <img onclick="jumpTo(0)" src="images/product-25.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer thumb-active object-contain bg-gray-50">
+                        <img onclick="jumpTo(1)" src="images/product-1.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-contain bg-gray-50">
+                        <img onclick="jumpTo(2)" src="images/product-5.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-contain bg-gray-50">
+                        <img onclick="jumpTo(3)" src="images/product-2.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-contain bg-gray-50">
+                        <img onclick="jumpTo(4)" src="images/product-26.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-contain bg-gray-50">
                     </div>
                 </div>
             </div>
@@ -448,6 +716,39 @@
                     </div>
                 </div>
 
+                <!-- Quantity Selector -->
+                <div class="space-y-3">
+                    <p class="font-bold text-gray-700">כמות:</p>
+                    <div class="flex items-center gap-4">
+                        <div class="qty-selector">
+                            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+                            <span class="qty-value" id="qty-value">1</span>
+                            <button class="qty-btn" onclick="changeQty(1)">+</button>
+                        </div>
+                        <span class="text-sm text-gray-500" id="qty-discount-hint"></span>
+                    </div>
+                </div>
+
+                <!-- Volume Discounts -->
+                <div class="volume-discount">
+                    <div class="volume-discount-title">
+                        <i data-lucide="percent" class="icon-sm"></i>
+                        קני יותר, חסכי יותר!
+                    </div>
+                    <div class="volume-tier" data-qty="1">
+                        <span>יחידה אחת</span>
+                        <span>מחיר מלא</span>
+                    </div>
+                    <div class="volume-tier" data-qty="2">
+                        <span>2 יחידות</span>
+                        <span class="text-green-600 font-semibold">10% הנחה</span>
+                    </div>
+                    <div class="volume-tier" data-qty="3">
+                        <span>3+ יחידות</span>
+                        <span class="text-green-600 font-semibold">20% הנחה</span>
+                    </div>
+                </div>
+
                 <!-- Shipping Protection -->
                 <div class="border border-dashed border-gray-300 p-4 rounded-xl flex items-center justify-between gap-4 text-right" style="background: var(--color-cream);">
                     <div class="flex items-center gap-3">
@@ -464,8 +765,10 @@
                 </div>
 
                 <!-- CTA -->
-                <button onclick="startUpsell()" class="cta-primary w-full py-4 rounded-xl text-xl font-bold" id="main-cta">
-                    להזמנה מאובטחת
+                <button onclick="addToCart()" class="cta-primary w-full py-4 rounded-xl text-xl font-bold flex items-center justify-center gap-3" id="main-cta">
+                    <i data-lucide="shopping-bag" class="icon"></i>
+                    <span>הוספה לסל</span>
+                    <span id="cta-price">— 279 ש"ח</span>
                 </button>
                 
                 <!-- Trust Elements -->
@@ -795,6 +1098,56 @@
         </div>
     </section>
 
+    <!-- PATENT SECTION -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="patent-badge mb-6 inline-flex">
+                    <i data-lucide="award" class="icon"></i>
+                    טכנולוגיה מוגנת בפטנט
+                </span>
+                <h2 class="text-3xl font-black mb-4 mt-6" style="color: var(--color-primary);">כן, למגבת הזו יש פטנט</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">הטכנולוגיה הייחודית שלנו מוגנת בפטנט בינלאומי - הוכחה שזה באמת עובד</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-gradient-to-br from-amber-50 to-white p-6 rounded-2xl border border-amber-200 text-center">
+                    <i data-lucide="file-check" class="icon-xl mb-4 mx-auto text-amber-600"></i>
+                    <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">פטנט רשום</h3>
+                    <p class="text-gray-600 text-sm">הטכנולוגיה שלנו עברה בדיקות קפדניות ונרשמה כפטנט מוגן בינלאומית</p>
+                </div>
+                <div class="bg-gradient-to-br from-amber-50 to-white p-6 rounded-2xl border border-amber-200 text-center">
+                    <i data-lucide="microscope" class="icon-xl mb-4 mx-auto text-amber-600"></i>
+                    <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">נבדק במעבדה</h3>
+                    <p class="text-gray-600 text-sm">בדיקות מעבדה עצמאיות אישרו יעילות של 99% בהשמדת חיידקים</p>
+                </div>
+                <div class="bg-gradient-to-br from-amber-50 to-white p-6 rounded-2xl border border-amber-200 text-center">
+                    <i data-lucide="shield-check" class="icon-xl mb-4 mx-auto text-amber-600"></i>
+                    <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">אישור בטיחות</h3>
+                    <p class="text-gray-600 text-sm">הכסף בריכוז הנמוך שלנו בטוח לחלוטין לשימוש יומיומי על העור</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-amber-100 to-amber-50 rounded-2xl p-8 border border-amber-200">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg border-4 border-amber-300">
+                            <i data-lucide="award" class="w-12 h-12 text-amber-600"></i>
+                        </div>
+                    </div>
+                    <div class="text-right flex-1">
+                        <h3 class="font-black text-xl mb-3" style="color: var(--color-primary);">למה פטנט חשוב?</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            פטנט הוא לא רק הגנה משפטית - הוא הוכחה שהטכנולוגיה <strong>באמת חדשנית ועובדת</strong>. 
+                            כדי לקבל פטנט, צריך להוכיח שהפתרון שלך שונה מכל מה שקיים בשוק ושהוא באמת פותר בעיה אמיתית. 
+                            הפטנט שלנו מאשר שטכנולוגיית סיבי הכסף שלנו היא <strong>הדרך היעילה ביותר</strong> לשמור על מגבת נקייה ורעננה לאורך זמן.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- BENEFITS GRID -->
     <section class="py-16 px-4 bg-white">
         <div class="max-w-4xl mx-auto">
@@ -1064,11 +1417,12 @@
     <div class="sticky-btn" id="sticky-cta">
         <div class="flex items-center justify-between gap-3">
             <div class="text-right">
-                <div class="font-bold text-lg" id="sticky-price">682 ש"ח</div>
-                <div class="text-xs text-gray-500" id="sticky-variant">זוג מגבות • לבנדר</div>
+                <div class="font-bold text-lg" id="sticky-price">279 ש"ח</div>
+                <div class="text-xs text-gray-500" id="sticky-variant">1× גדולה חלק • לבנדר</div>
             </div>
-            <button onclick="startUpsell()" class="cta-primary flex-1 py-3 rounded-xl text-lg font-bold">
-                להזמנה מאובטחת
+            <button onclick="addToCart()" class="cta-primary flex-1 py-3 rounded-xl text-lg font-bold flex items-center justify-center gap-2">
+                <i data-lucide="shopping-bag" class="icon-sm"></i>
+                הוספה לסל
             </button>
         </div>
     </div>
@@ -1131,118 +1485,134 @@
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             updatePriceDisplay();
+            updateVolumeTiers();
+            initSlider();
         });
 
         // ============ PRODUCT DATA ============
         const productData = {
-            // Prices by style and size
             prices: {
-                striped: { small: 179, large: 379 },  // פסים
-                solid: { small: 179, large: 279 }      // חלק
+                striped: { small: 179, large: 379 },
+                solid: { small: 179, large: 279 }
             },
-            // Set prices (Small + Large)
             setPrices: {
-                striped: { price: 439, originalPrice: 558 },  // 179 + 379 = 558 → 439
-                solid: { price: 399, originalPrice: 458 }      // 179 + 279 = 458 → 399
+                striped: { price: 439, originalPrice: 558 },
+                solid: { price: 399, originalPrice: 458 }
             },
-            // Sizes per style
             sizes: {
                 striped: { small: '30×65', large: '100×150' },
                 solid: { small: '34×75', large: '70×140' }
             },
-            // Real product images mapping
             images: {
                 lavender: { solid: 'product-1.jpg', striped: 'product-28.jpg' },
                 mint: { solid: 'product-27.jpg', striped: 'product-31.jpg' },
                 blue: { solid: 'product-29.jpg', striped: 'product-33.jpg' },
                 cream: { solid: 'product-30.jpg', striped: 'product-34.jpg' }
             },
-            colorNames: {
-                lavender: 'לבנדר',
-                mint: 'מנטה',
-                blue: 'כחול',
-                cream: 'קרם'
-            },
-            styleNames: {
-                solid: 'חלק',
-                striped: 'פסים'
-            }
+            colorNames: { lavender: 'לבנדר', mint: 'מנטה', blue: 'כחול', cream: 'קרם' },
+            styleNames: { solid: 'חלק', striped: 'פסים' },
+            volumeDiscounts: [
+                { qty: 1, discount: 0 },
+                { qty: 2, discount: 0.10 },
+                { qty: 3, discount: 0.20 }
+            ]
         };
 
         // ============ STATE ============
-        let state = {
-            color: 'lavender',
-            style: 'solid',
-            size: 'large'
-        };
+        let state = { color: 'lavender', style: 'solid', size: 'large', qty: 1 };
+        let cart = [];
 
         // ============ PRICE CALCULATION ============
-        function getCurrentPrice() {
+        function getBasePrice() {
             return productData.prices[state.style][state.size];
         }
 
-        function getComparePrice() {
-            // Compare price is ~30% higher
-            return Math.round(getCurrentPrice() * 1.45);
+        function getVolumeDiscount(qty) {
+            if (qty >= 3) return 0.20;
+            if (qty >= 2) return 0.10;
+            return 0;
         }
 
-        function getSizeLabel() {
-            return productData.sizes[state.style][state.size];
+        function getCurrentTotalPrice() {
+            const base = getBasePrice();
+            const discount = getVolumeDiscount(state.qty);
+            return Math.round(base * state.qty * (1 - discount));
+        }
+
+        function getComparePrice() {
+            return Math.round(getBasePrice() * 1.45);
         }
 
         function updatePriceDisplay() {
-            const price = getCurrentPrice();
+            const unitPrice = getBasePrice();
+            const totalPrice = getCurrentTotalPrice();
             const comparePrice = getComparePrice();
-            const savingsPercent = Math.round(((comparePrice - price) / comparePrice) * 100);
+            const discount = getVolumeDiscount(state.qty);
+            const savingsPercent = discount > 0 ? Math.round(discount * 100) : Math.round(((comparePrice - unitPrice) / comparePrice) * 100);
             
-            document.getElementById('display-price').textContent = price + ' ש"ח';
+            document.getElementById('display-price').textContent = unitPrice + ' ש"ח';
             document.getElementById('display-compare-price').textContent = comparePrice + ' ש"ח';
-            document.getElementById('display-savings').textContent = 'חסכון של ' + savingsPercent + '%';
+            document.getElementById('display-savings').textContent = discount > 0 ? Math.round(discount * 100) + '% הנחת כמות' : 'חסכון של ' + savingsPercent + '%';
+            
+            const ctaPrice = document.getElementById('cta-price');
+            if (ctaPrice) {
+                ctaPrice.textContent = state.qty > 1 ? '— ' + totalPrice + ' ש"ח (' + state.qty + " יח')" : '— ' + totalPrice + ' ש"ח';
+            }
+            
+            const qtyHint = document.getElementById('qty-discount-hint');
+            if (qtyHint) {
+                if (state.qty === 1) qtyHint.textContent = 'קני 2+ לקבל 10% הנחה';
+                else if (state.qty === 2) qtyHint.textContent = 'קני עוד 1 לקבל 20% הנחה!';
+                else qtyHint.textContent = '🎉 20% הנחה!';
+            }
             
             updateSizeButtons();
             updateStickyBar();
             updateProductImage();
+            updateVolumeTiers();
+        }
+
+        function updateVolumeTiers() {
+            document.querySelectorAll('.volume-tier').forEach(tier => {
+                const tierQty = parseInt(tier.dataset.qty);
+                tier.classList.toggle('active', 
+                    (tierQty === 1 && state.qty === 1) ||
+                    (tierQty === 2 && state.qty === 2) ||
+                    (tierQty === 3 && state.qty >= 3)
+                );
+            });
         }
 
         function updateSizeButtons() {
-            // Update size button labels with current style dimensions
             const smallBtn = document.querySelector('.variant-btn[data-size="small"]');
             const largeBtn = document.querySelector('.variant-btn[data-size="large"]');
-            
-            if (smallBtn) {
-                smallBtn.textContent = 'קטנה (' + productData.sizes[state.style].small + ')';
-            }
-            if (largeBtn) {
-                largeBtn.textContent = 'גדולה (' + productData.sizes[state.style].large + ')';
-            }
+            if (smallBtn) smallBtn.textContent = 'קטנה (' + productData.sizes[state.style].small + ')';
+            if (largeBtn) largeBtn.textContent = 'גדולה (' + productData.sizes[state.style].large + ')';
         }
 
         function updateStickyBar() {
-            const price = getCurrentPrice();
+            const totalPrice = getCurrentTotalPrice();
             const colorName = productData.colorNames[state.color];
             const styleName = productData.styleNames[state.style];
-            const sizeLabel = getSizeLabel();
             const sizeName = state.size === 'small' ? 'קטנה' : 'גדולה';
             
-            document.getElementById('sticky-price').textContent = price + ' ש"ח';
-            document.getElementById('sticky-variant').textContent = sizeName + ' ' + sizeLabel + ' • ' + styleName + ' • ' + colorName;
+            document.getElementById('sticky-price').textContent = totalPrice + ' ש"ח';
+            document.getElementById('sticky-variant').textContent = state.qty + '× ' + sizeName + ' ' + styleName + ' • ' + colorName;
         }
 
         function updateProductImage() {
             const imageData = productData.images[state.color];
             const imageName = imageData[state.style];
             const mainImg = document.getElementById('main-product-img');
-            const firstThumb = document.querySelector('.slider-thumb');
-            
-            if (mainImg && imageName) {
-                mainImg.src = 'images/' + imageName;
-                if (firstThumb) {
-                    firstThumb.src = 'images/' + imageName;
-                }
-            }
+            if (mainImg && imageName) mainImg.src = 'images/' + imageName;
         }
 
-        // ============ VARIANT SELECTION ============
+        function changeQty(delta) {
+            state.qty = Math.max(1, Math.min(10, state.qty + delta));
+            document.getElementById('qty-value').textContent = state.qty;
+            updatePriceDisplay();
+        }
+
         function selectColor(el) {
             document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
             el.classList.add('active');
@@ -1266,137 +1636,192 @@
         }
 
         // ============ SLIDER ============
-        const track = document.getElementById('slider-track');
-        const thumbs = document.querySelectorAll('.slider-thumb');
         let currentSlide = 0;
+        const totalSlides = 5;
 
-        function jumpTo(index) {
-            const slideWidth = track.querySelector('.slider-item').offsetWidth;
-            track.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
-            updateThumbs(index);
+        function initSlider() {
+            const track = document.getElementById('slider-track');
+            if (!track) return;
+            
+            track.addEventListener('scroll', () => {
+                const slideWidth = track.querySelector('.slider-item').offsetWidth;
+                if (slideWidth) {
+                    const newIndex = Math.round(track.scrollLeft / slideWidth);
+                    if (newIndex !== currentSlide) {
+                        currentSlide = newIndex;
+                        updateSliderUI();
+                    }
+                }
+            });
+            updateSliderUI();
         }
 
-        function updateThumbs(index) {
-            thumbs.forEach((thumb, i) => {
-                thumb.classList.toggle('thumb-active', i === index);
-                thumb.style.opacity = i === index ? '1' : '0.6';
+        function updateSliderUI() {
+            document.querySelectorAll('.slider-thumb').forEach((thumb, i) => {
+                thumb.classList.toggle('thumb-active', i === currentSlide);
+                thumb.style.opacity = i === currentSlide ? '1' : '0.6';
+            });
+            document.querySelectorAll('.slide-dot').forEach((dot, i) => {
+                dot.style.background = i === currentSlide ? 'white' : 'rgba(255,255,255,0.5)';
             });
         }
 
-        track.addEventListener('scroll', () => {
+        function jumpTo(index) {
+            const track = document.getElementById('slider-track');
             const slideWidth = track.querySelector('.slider-item').offsetWidth;
-            const newIndex = Math.round(track.scrollLeft / slideWidth);
-            if (newIndex !== currentSlide) {
-                currentSlide = newIndex;
-                updateThumbs(currentSlide);
+            track.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
+            currentSlide = index;
+            updateSliderUI();
+        }
+
+        function slideNext() { jumpTo((currentSlide + 1) % totalSlides); }
+        function slidePrev() { jumpTo((currentSlide - 1 + totalSlides) % totalSlides); }
+
+        // ============ CART ============
+        function addToCart() {
+            cart.push({
+                id: Date.now(),
+                color: state.color,
+                style: state.style,
+                size: state.size,
+                qty: state.qty,
+                unitPrice: getBasePrice()
+            });
+            updateCartUI();
+            openCart();
+            state.qty = 1;
+            document.getElementById('qty-value').textContent = '1';
+            updatePriceDisplay();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        function getCartTotal() {
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const discount = getVolumeDiscount(totalQty);
+            const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+            return Math.round(subtotal * (1 - discount));
+        }
+
+        function updateCartUI() {
+            const cartItemsEl = document.getElementById('cart-items');
+            const cartFooterEl = document.getElementById('cart-footer');
+            const cartBadgeEl = document.getElementById('cart-badge');
+            const cartTotalEl = document.getElementById('cart-total-price');
+            const cartDiscountEl = document.getElementById('cart-discount-display');
+            
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = getCartTotal();
+            const discount = getVolumeDiscount(totalQty);
+            
+            if (totalQty > 0) {
+                cartBadgeEl.style.display = 'flex';
+                cartBadgeEl.textContent = totalQty;
+            } else {
+                cartBadgeEl.style.display = 'none';
+            }
+            
+            if (cart.length === 0) {
+                cartFooterEl.style.display = 'none';
+                cartItemsEl.innerHTML = '<div class="cart-empty"><p>הסל ריק</p><p class="text-sm mt-1">הוסיפי מגבות לסל</p></div>';
+            } else {
+                cartFooterEl.style.display = 'block';
+                let html = '';
+                cart.forEach(item => {
+                    const colorName = productData.colorNames[item.color];
+                    const styleName = productData.styleNames[item.style];
+                    const sizeName = item.size === 'small' ? 'קטנה' : 'גדולה';
+                    const sizeLabel = productData.sizes[item.style][item.size];
+                    const imgSrc = 'images/' + productData.images[item.color][item.style];
+                    
+                    html += '<div class="cart-item"><img src="' + imgSrc + '" class="cart-item-img" alt="' + colorName + '"><div class="cart-item-details"><div class="cart-item-title">מגבת ' + sizeName + ' ' + styleName + '</div><div class="cart-item-variant">' + colorName + ' • ' + sizeLabel + '</div><div class="cart-item-variant">כמות: ' + item.qty + '</div><div class="cart-item-price">' + (item.unitPrice * item.qty) + ' ש"ח</div></div><button class="cart-item-remove" onclick="removeFromCart(' + item.id + ')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>';
+                });
+                cartItemsEl.innerHTML = html;
+            }
+            
+            cartTotalEl.textContent = totalPrice + ' ש"ח';
+            
+            if (discount > 0) {
+                const savedAmount = Math.round(cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0) * discount);
+                cartDiscountEl.innerHTML = '<div class="cart-discount-badge">🎉 ' + Math.round(discount * 100) + '% הנחת כמות — חסכת ' + savedAmount + ' ש"ח!</div>';
+            } else if (totalQty === 1) {
+                cartDiscountEl.innerHTML = '<div class="cart-discount-badge" style="background:#fef3c7;color:#92400e;">💡 הוסיפי עוד מגבת וקבלי 10% הנחה!</div>';
+            } else {
+                cartDiscountEl.innerHTML = '';
+            }
+        }
+
+        function openCart() {
+            document.getElementById('cart-overlay').classList.add('active');
+            document.getElementById('side-cart').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCart() {
+            document.getElementById('cart-overlay').classList.remove('active');
+            document.getElementById('side-cart').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) return;
+            closeCart();
+            startUpsell();
+        }
+
+        // ============ STICKY BUTTON ============
+        window.addEventListener('scroll', () => {
+            const productSection = document.getElementById('product-section');
+            const stickyBtn = document.getElementById('sticky-cta');
+            if (productSection && stickyBtn) {
+                const rect = productSection.getBoundingClientRect();
+                stickyBtn.classList.toggle('show', rect.bottom < 0);
             }
         });
 
-        // ============ STICKY BUTTON ============
-        const stickyBtn = document.getElementById('sticky-cta');
-        const productSection = document.getElementById('product-section');
-        
-        window.addEventListener('scroll', () => {
-            const rect = productSection.getBoundingClientRect();
-            stickyBtn.classList.toggle('show', rect.bottom < 0);
-        });
-
         // ============ UPSELL FLOW ============
-        // Logic:
-        // - If customer buys Large → upsell Small (same style) → then offer SET
-        // - If customer buys Small → upsell Large (same style) → then offer SET
-        // - Never mix striped and solid
-        
-        const upsellFlow = document.getElementById('upsell-flow');
         let timerInterval;
-        let cartTotal = 0;
-        let cartItems = [];
 
         function startUpsell() {
-            // Add current selection to cart
-            const currentPrice = getCurrentPrice();
-            cartTotal = currentPrice;
-            cartItems = [{
-                size: state.size,
-                style: state.style,
-                color: state.color,
-                price: currentPrice
-            }];
-            
-            // Setup upsell step 1: offer the OTHER size (same style)
             setupUpsellStep1();
-            
-            upsellFlow.classList.add('active');
+            document.getElementById('upsell-flow').classList.add('active');
             document.body.style.overflow = 'hidden';
             startTimer();
         }
 
         function setupUpsellStep1() {
-            const upsellSize = state.size === 'large' ? 'small' : 'large';
-            const upsellSizeName = upsellSize === 'small' ? 'קטנה' : 'גדולה';
-            const upsellSizeLabel = productData.sizes[state.style][upsellSize];
-            const upsellPrice = productData.prices[state.style][upsellSize];
-            const styleName = productData.styleNames[state.style];
+            const styles = cart.map(i => i.style);
+            const dominantStyle = styles[0] || 'solid';
+            const sizesInCart = cart.map(i => i.size);
+            const hasSmall = sizesInCart.includes('small');
+            const hasLarge = sizesInCart.includes('large');
+            let upsellSize = hasLarge && !hasSmall ? 'small' : (!hasLarge ? 'large' : null);
             
-            // Calculate set discount
-            const setData = productData.setPrices[state.style];
-            const individualTotal = productData.prices[state.style].small + productData.prices[state.style].large;
-            const setDiscount = individualTotal - setData.price;
-            
-            const step1Content = document.getElementById('upsell-step-1');
-            step1Content.innerHTML = `
-                <div class="upsell-img-wrapper">
-                    <img src="images/${productData.images[state.color][state.style]}" alt="מגבת ${upsellSizeName}">
-                </div>
-                <div class="px-6 shrink-0 space-y-4">
-                    <p class="text-white/80 text-center text-sm">הצעה בלעדית ללקוחות!</p>
-                    <p class="text-white text-center text-xl font-bold leading-relaxed">
-                        השלימי לסט מושלם!<br>
-                        מגבת ${upsellSizeName} (${upsellSizeLabel}) ${styleName}
-                    </p>
-                    <div class="bg-white/10 rounded-xl p-4 text-center">
-                        <p class="text-white/70 text-sm line-through">${individualTotal} ש"ח לשתי המגבות</p>
-                        <p class="text-2xl font-black" style="color: var(--color-secondary);">${setData.price} ש"ח בלבד</p>
-                        <p class="text-green-400 text-sm font-bold">חסכי ${setDiscount} ש"ח!</p>
-                    </div>
-                    <div class="space-y-3 pb-4">
-                        <button onclick="handleUpsell(1, true)" class="w-full py-4 rounded-xl text-lg font-bold" style="background: var(--color-secondary); color: var(--color-primary);">
-                            כן! להוסיף ולחסוך — ${setData.price} ש"ח
-                        </button>
-                        <button onclick="handleUpsell(1, false)" class="text-white/70 font-medium block mx-auto underline text-sm">
-                            לא תודה, להמשיך עם מגבת אחת
-                        </button>
-                    </div>
-                </div>
-            `;
+            if (upsellSize) {
+                const upsellSizeName = upsellSize === 'small' ? 'קטנה' : 'גדולה';
+                const upsellSizeLabel = productData.sizes[dominantStyle][upsellSize];
+                const styleName = productData.styleNames[dominantStyle];
+                const setData = productData.setPrices[dominantStyle];
+                const individualTotal = productData.prices[dominantStyle].small + productData.prices[dominantStyle].large;
+                const setDiscount = individualTotal - setData.price;
+                const color = cart[0].color || 'lavender';
+                
+                document.getElementById('upsell-step-1').innerHTML = '<div class="upsell-img-wrapper"><img src="images/' + productData.images[color][dominantStyle] + '" alt="מגבת ' + upsellSizeName + '"></div><div class="px-6 shrink-0 space-y-4"><p class="text-white/80 text-center text-sm">הצעה בלעדית!</p><p class="text-white text-center text-xl font-bold leading-relaxed">השלימי לסט מושלם!<br>הוסיפי מגבת ' + upsellSizeName + ' (' + upsellSizeLabel + ') ' + styleName + '</p><div class="bg-white/10 rounded-xl p-4 text-center"><p class="text-white/70 text-sm line-through">' + individualTotal + ' ש"ח לסט</p><p class="text-2xl font-black" style="color: var(--color-secondary);">' + setData.price + ' ש"ח בלבד</p><p class="text-green-400 text-sm font-bold">חסכי ' + setDiscount + ' ש"ח!</p></div><div class="space-y-3 pb-4"><button onclick="handleUpsell(1, true, \'' + upsellSize + '\', \'' + dominantStyle + '\', \'' + color + '\')" class="w-full py-4 rounded-xl text-lg font-bold" style="background: var(--color-secondary); color: var(--color-primary);">כן! להוסיף ולחסוך</button><button onclick="handleUpsell(1, false)" class="text-white/70 font-medium block mx-auto underline text-sm">לא תודה, להמשיך לשלב הבא</button></div></div>';
+            } else {
+                goToUpsellStep2();
+            }
         }
 
-        function setupUpsellStep2() {
-            const step2Content = document.getElementById('upsell-step-2');
-            step2Content.innerHTML = `
-                <div class="upsell-img-wrapper">
-                    <img src="images/product-11.jpg" alt="משלוח מהיר">
-                </div>
-                <div class="px-6 shrink-0 space-y-4">
-                    <p class="text-white/80 text-center text-sm">שדרוג אחרון!</p>
-                    <p class="text-white text-center text-xl font-bold leading-relaxed">
-                        משלוח אקספרס<br>
-                        תוך 3-5 ימי עסקים בלבד
-                    </p>
-                    <div class="bg-white/10 rounded-xl p-4 text-center">
-                        <p class="text-white/70 text-sm">במקום 49 ש"ח</p>
-                        <p class="text-2xl font-black" style="color: var(--color-secondary);">רק 29 ש"ח</p>
-                    </div>
-                    <div class="space-y-3 pb-4">
-                        <button onclick="handleUpsell(2, true)" class="w-full py-4 rounded-xl text-lg font-bold" style="background: var(--color-secondary); color: var(--color-primary);">
-                            כן, אני רוצה מהר יותר — +29 ש"ח
-                        </button>
-                        <button onclick="handleUpsell(2, false)" class="text-white/70 font-medium block mx-auto underline text-sm">
-                            לא תודה, משלוח רגיל מספיק
-                        </button>
-                    </div>
-                </div>
-            `;
+        function goToUpsellStep2() {
+            document.getElementById('upsell-step-1').classList.add('hidden');
+            document.getElementById('upsell-step-2').classList.remove('hidden');
+            document.getElementById('upsell-step-2').classList.add('slide-in-up');
+            document.getElementById('upsell-progress').style.width = '100%';
+            
+            document.getElementById('upsell-step-2').innerHTML = '<div class="upsell-img-wrapper"><img src="images/product-11.jpg" alt="משלוח מהיר"></div><div class="px-6 shrink-0 space-y-4"><p class="text-white/80 text-center text-sm">שדרוג אחרון!</p><p class="text-white text-center text-xl font-bold leading-relaxed">משלוח אקספרס<br>תוך 3-5 ימי עסקים בלבד</p><div class="bg-white/10 rounded-xl p-4 text-center"><p class="text-white/70 text-sm">במקום 49 ש"ח</p><p class="text-2xl font-black" style="color: var(--color-secondary);">רק 29 ש"ח</p></div><div class="space-y-3 pb-4"><button onclick="handleUpsell(2, true)" class="w-full py-4 rounded-xl text-lg font-bold" style="background: var(--color-secondary); color: var(--color-primary);">כן, אני רוצה מהר יותר — +29 ש"ח</button><button onclick="handleUpsell(2, false)" class="text-white/70 font-medium block mx-auto underline text-sm">לא תודה, משלוח רגיל מספיק</button></div></div>';
         }
 
         function startTimer() {
@@ -1405,52 +1830,44 @@
             timerInterval = setInterval(() => {
                 const mins = Math.floor(time / 60);
                 const secs = time % 60;
-                display.textContent = mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
+                display.textContent = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
                 if (time <= 0) clearInterval(timerInterval);
                 time--;
             }, 1000);
         }
 
-        function handleUpsell(step, accepted) {
+        function handleUpsell(step, accepted, upsellSize, upsellStyle, upsellColor) {
             if (step === 1) {
-                if (accepted) {
-                    // Customer accepted set - update cart to set price
-                    const setData = productData.setPrices[state.style];
-                    cartTotal = setData.price;
-                    cartItems.push({
-                        size: state.size === 'large' ? 'small' : 'large',
-                        style: state.style,
-                        color: state.color,
-                        price: 0 // Part of set
+                if (accepted && upsellSize && upsellStyle && upsellColor) {
+                    cart.push({
+                        id: Date.now(),
+                        color: upsellColor,
+                        style: upsellStyle,
+                        size: upsellSize,
+                        qty: 1,
+                        unitPrice: productData.prices[upsellStyle][upsellSize]
                     });
+                    updateCartUI();
                 }
-                
-                // Move to step 2 (express shipping)
-                document.getElementById('upsell-step-1').classList.add('hidden');
-                setupUpsellStep2();
-                document.getElementById('upsell-step-2').classList.remove('hidden');
-                document.getElementById('upsell-step-2').classList.add('slide-in-up');
-                document.getElementById('upsell-progress').style.width = '100%';
+                goToUpsellStep2();
             } else {
-                // Step 2 - express shipping
-                if (accepted) {
-                    cartTotal += 29;
-                }
-                
                 clearInterval(timerInterval);
+                let finalTotal = getCartTotal();
+                if (accepted) finalTotal += 29;
                 
-                // Show final summary
-                const itemsList = cartItems.map(item => {
+                const summary = cart.map(item => {
                     const sizeName = item.size === 'small' ? 'קטנה' : 'גדולה';
                     const styleName = productData.styleNames[item.style];
                     const colorName = productData.colorNames[item.color];
-                    return `מגבת ${sizeName} ${styleName} - ${colorName}`;
+                    return item.qty + '× מגבת ' + sizeName + ' ' + styleName + ' - ' + colorName;
                 }).join('\n');
                 
-                alert('מעבר לתשלום...\n\n' + itemsList + '\n\nסה"כ: ' + cartTotal + ' ש"ח');
+                alert('מעבר לתשלום...\n\n' + summary + '\n\nסה"כ: ' + finalTotal + ' ש"ח');
                 
-                upsellFlow.classList.remove('active');
+                document.getElementById('upsell-flow').classList.remove('active');
                 document.body.style.overflow = '';
+                cart = [];
+                updateCartUI();
             }
         }
     </script>
