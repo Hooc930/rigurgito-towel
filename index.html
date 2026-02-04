@@ -448,55 +448,6 @@
                     </div>
                 </div>
 
-                <!-- Pack Selector -->
-                <div class="space-y-3" id="pack-selector">
-                    <p class="font-bold text-gray-700">בחרי את הכמות:</p>
-                    
-                    <div class="quantity-break" onclick="activatePack(0)">
-                        <div class="flex justify-between items-center pointer-events-none">
-                            <div class="flex items-center">
-                                <span class="radio-dot"></span>
-                                <span class="font-bold text-lg">מגבת אחת</span>
-                            </div>
-                            <span class="font-bold text-lg pack-price">379 ש"ח</span>
-                        </div>
-                    </div>
-                    
-                    <div class="quantity-break active" onclick="activatePack(1)">
-                        <div class="badge-tag">הכי נמכר</div>
-                        <div class="flex justify-between items-center pointer-events-none">
-                            <div class="flex items-center">
-                                <span class="radio-dot"></span>
-                                <div>
-                                    <span class="font-bold text-lg block leading-tight">זוג מגבות</span>
-                                    <span class="text-xs text-gray-500">+ מגבת פנים במתנה</span>
-                                </div>
-                            </div>
-                            <div class="text-left">
-                                <span class="font-bold text-lg block pack-price">682 ש"ח</span>
-                                <span class="text-xs text-green-600">חסכי 10%</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="quantity-break" onclick="activatePack(2)">
-                        <div class="badge-tag green">הכי משתלם</div>
-                        <div class="flex justify-between items-center pointer-events-none">
-                            <div class="flex items-center">
-                                <span class="radio-dot"></span>
-                                <div>
-                                    <span class="font-bold text-lg block leading-tight">מארז משפחתי (3)</span>
-                                    <span class="text-xs text-gray-500">+ 2 מגבות פנים במתנה</span>
-                                </div>
-                            </div>
-                            <div class="text-left">
-                                <span class="font-bold text-lg block pack-price">910 ש"ח</span>
-                                <span class="text-xs text-green-600">חסכי 20%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Shipping Protection -->
                 <div class="border border-dashed border-gray-300 p-4 rounded-xl flex items-center justify-between gap-4 text-right" style="background: var(--color-cream);">
                     <div class="flex items-center gap-3">
@@ -1184,17 +1135,21 @@
 
         // ============ PRODUCT DATA ============
         const productData = {
-            // Prices based on size: small = 179, large = 379
-            basePrices: {
-                small: 179,   // 34×75 cm
-                large: 379    // 70×140 cm
+            // Prices by style and size
+            prices: {
+                striped: { small: 179, large: 379 },  // פסים
+                solid: { small: 179, large: 279 }      // חלק
             },
-            compareMultiplier: 1.45,
-            packMultipliers: [
-                { qty: 1, discount: 0, label: 'מגבת אחת', gift: '' },
-                { qty: 2, discount: 0.10, label: 'זוג מגבות', gift: '+ מגבת פנים במתנה' },
-                { qty: 3, discount: 0.20, label: 'מארז משפחתי (3)', gift: '+ 2 מגבות פנים במתנה' }
-            ],
+            // Set prices (Small + Large)
+            setPrices: {
+                striped: { price: 439, originalPrice: 558 },  // 179 + 379 = 558 → 439
+                solid: { price: 399, originalPrice: 458 }      // 179 + 279 = 458 → 399
+            },
+            // Sizes per style
+            sizes: {
+                striped: { small: '30×65', large: '100×150' },
+                solid: { small: '34×75', large: '70×140' }
+            },
             // Real product images mapping
             images: {
                 lavender: { solid: 'product-1.jpg', striped: 'product-28.jpg' },
@@ -1208,9 +1163,9 @@
                 blue: 'כחול',
                 cream: 'קרם'
             },
-            sizes: {
-                small: '(34×75)',
-                large: '(70×140)'
+            styleNames: {
+                solid: 'חלק',
+                striped: 'פסים'
             }
         };
 
@@ -1218,64 +1173,59 @@
         let state = {
             color: 'lavender',
             style: 'solid',
-            size: 'large',
-            pack: 1
+            size: 'large'
         };
 
         // ============ PRICE CALCULATION ============
-        function calculatePrice() {
-            const basePrice = productData.basePrices[state.size];
-            const packInfo = productData.packMultipliers[state.pack];
-            const qty = packInfo.qty;
-            const discount = packInfo.discount;
-            
-            const totalBase = basePrice * qty;
-            const finalPrice = Math.round(totalBase * (1 - discount));
-            const comparePrice = Math.round(totalBase * productData.compareMultiplier);
-            const savings = comparePrice - finalPrice;
-            const savingsPercent = Math.round((savings / comparePrice) * 100);
-            
-            return { finalPrice, comparePrice, savings, savingsPercent };
+        function getCurrentPrice() {
+            return productData.prices[state.style][state.size];
+        }
+
+        function getComparePrice() {
+            // Compare price is ~30% higher
+            return Math.round(getCurrentPrice() * 1.45);
+        }
+
+        function getSizeLabel() {
+            return productData.sizes[state.style][state.size];
         }
 
         function updatePriceDisplay() {
-            const { finalPrice, comparePrice, savingsPercent } = calculatePrice();
+            const price = getCurrentPrice();
+            const comparePrice = getComparePrice();
+            const savingsPercent = Math.round(((comparePrice - price) / comparePrice) * 100);
             
-            document.getElementById('display-price').textContent = finalPrice + ' ש"ח';
+            document.getElementById('display-price').textContent = price + ' ש"ח';
             document.getElementById('display-compare-price').textContent = comparePrice + ' ש"ח';
             document.getElementById('display-savings').textContent = 'חסכון של ' + savingsPercent + '%';
             
-            updatePackPrices();
+            updateSizeButtons();
             updateStickyBar();
             updateProductImage();
         }
 
-        function updatePackPrices() {
-            const packs = document.querySelectorAll('.quantity-break');
-            packs.forEach((pack, index) => {
-                const basePrice = productData.basePrices[state.size];
-                const packInfo = productData.packMultipliers[index];
-                const qty = packInfo.qty;
-                const discount = packInfo.discount;
-                
-                const totalBase = basePrice * qty;
-                const finalPrice = Math.round(totalBase * (1 - discount));
-                
-                const priceEl = pack.querySelector('.pack-price');
-                if (priceEl) {
-                    priceEl.textContent = finalPrice + ' ש"ח';
-                }
-            });
+        function updateSizeButtons() {
+            // Update size button labels with current style dimensions
+            const smallBtn = document.querySelector('.variant-btn[data-size="small"]');
+            const largeBtn = document.querySelector('.variant-btn[data-size="large"]');
+            
+            if (smallBtn) {
+                smallBtn.textContent = 'קטנה (' + productData.sizes[state.style].small + ')';
+            }
+            if (largeBtn) {
+                largeBtn.textContent = 'גדולה (' + productData.sizes[state.style].large + ')';
+            }
         }
 
         function updateStickyBar() {
-            const { finalPrice } = calculatePrice();
-            const packInfo = productData.packMultipliers[state.pack];
+            const price = getCurrentPrice();
             const colorName = productData.colorNames[state.color];
-            const sizeName = productData.sizes[state.size];
+            const styleName = productData.styleNames[state.style];
+            const sizeLabel = getSizeLabel();
+            const sizeName = state.size === 'small' ? 'קטנה' : 'גדולה';
             
-            document.getElementById('sticky-price').textContent = finalPrice + ' ש"ח';
-            document.getElementById('sticky-variant').textContent = packInfo.label + ' • ' + colorName + ' ' + sizeName;
+            document.getElementById('sticky-price').textContent = price + ' ש"ח';
+            document.getElementById('sticky-variant').textContent = sizeName + ' ' + sizeLabel + ' • ' + styleName + ' • ' + colorName;
         }
 
         function updateProductImage() {
@@ -1305,20 +1255,13 @@
             document.querySelectorAll('.variant-btn[data-style]').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
             state.style = el.dataset.style;
-            updateProductImage();
+            updatePriceDisplay();
         }
 
         function selectSize(el) {
             document.querySelectorAll('.variant-btn[data-size]').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
             state.size = el.dataset.size;
-            updatePriceDisplay();
-        }
-
-        function activatePack(index) {
-            const packs = document.querySelectorAll('.quantity-break');
-            packs.forEach((pack, i) => pack.classList.toggle('active', i === index));
-            state.pack = index;
             updatePriceDisplay();
         }
 
@@ -1359,13 +1302,101 @@
         });
 
         // ============ UPSELL FLOW ============
+        // Logic:
+        // - If customer buys Large → upsell Small (same style) → then offer SET
+        // - If customer buys Small → upsell Large (same style) → then offer SET
+        // - Never mix striped and solid
+        
         const upsellFlow = document.getElementById('upsell-flow');
         let timerInterval;
+        let cartTotal = 0;
+        let cartItems = [];
 
         function startUpsell() {
+            // Add current selection to cart
+            const currentPrice = getCurrentPrice();
+            cartTotal = currentPrice;
+            cartItems = [{
+                size: state.size,
+                style: state.style,
+                color: state.color,
+                price: currentPrice
+            }];
+            
+            // Setup upsell step 1: offer the OTHER size (same style)
+            setupUpsellStep1();
+            
             upsellFlow.classList.add('active');
             document.body.style.overflow = 'hidden';
             startTimer();
+        }
+
+        function setupUpsellStep1() {
+            const upsellSize = state.size === 'large' ? 'small' : 'large';
+            const upsellSizeName = upsellSize === 'small' ? 'קטנה' : 'גדולה';
+            const upsellSizeLabel = productData.sizes[state.style][upsellSize];
+            const upsellPrice = productData.prices[state.style][upsellSize];
+            const styleName = productData.styleNames[state.style];
+            
+            // Calculate set discount
+            const setData = productData.setPrices[state.style];
+            const individualTotal = productData.prices[state.style].small + productData.prices[state.style].large;
+            const setDiscount = individualTotal - setData.price;
+            
+            const step1Content = document.getElementById('upsell-step-1');
+            step1Content.innerHTML = `
+                <div class="upsell-img-wrapper">
+                    <img src="images/${productData.images[state.color][state.style]}" alt="מגבת ${upsellSizeName}">
+                </div>
+                <div class="px-6 shrink-0 space-y-4">
+                    <p class="text-white/80 text-center text-sm">הצעה בלעדית ללקוחות!</p>
+                    <p class="text-white text-center text-xl font-bold leading-relaxed">
+                        השלימי לסט מושלם!<br>
+                        מגבת ${upsellSizeName} (${upsellSizeLabel}) ${styleName}
+                    </p>
+                    <div class="bg-white/10 rounded-xl p-4 text-center">
+                        <p class="text-white/70 text-sm line-through">${individualTotal} ש"ח לשתי המגבות</p>
+                        <p class="text-2xl font-black" style="color: var(--color-secondary);">${setData.price} ש"ח בלבד</p>
+                        <p class="text-green-400 text-sm font-bold">חסכי ${setDiscount} ש"ח!</p>
+                    </div>
+                    <div class="space-y-3 pb-4">
+                        <button onclick="handleUpsell(1, true)" class="w-full py-4 rounded-xl text-lg font-bold" style="background: var(--color-secondary); color: var(--color-primary);">
+                            כן! להוסיף ולחסוך — ${setData.price} ש"ח
+                        </button>
+                        <button onclick="handleUpsell(1, false)" class="text-white/70 font-medium block mx-auto underline text-sm">
+                            לא תודה, להמשיך עם מגבת אחת
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function setupUpsellStep2() {
+            const step2Content = document.getElementById('upsell-step-2');
+            step2Content.innerHTML = `
+                <div class="upsell-img-wrapper">
+                    <img src="images/product-11.jpg" alt="משלוח מהיר">
+                </div>
+                <div class="px-6 shrink-0 space-y-4">
+                    <p class="text-white/80 text-center text-sm">שדרוג אחרון!</p>
+                    <p class="text-white text-center text-xl font-bold leading-relaxed">
+                        משלוח אקספרס<br>
+                        תוך 3-5 ימי עסקים בלבד
+                    </p>
+                    <div class="bg-white/10 rounded-xl p-4 text-center">
+                        <p class="text-white/70 text-sm">במקום 49 ש"ח</p>
+                        <p class="text-2xl font-black" style="color: var(--color-secondary);">רק 29 ש"ח</p>
+                    </div>
+                    <div class="space-y-3 pb-4">
+                        <button onclick="handleUpsell(2, true)" class="w-full py-4 rounded-xl text-lg font-bold" style="background: var(--color-secondary); color: var(--color-primary);">
+                            כן, אני רוצה מהר יותר — +29 ש"ח
+                        </button>
+                        <button onclick="handleUpsell(2, false)" class="text-white/70 font-medium block mx-auto underline text-sm">
+                            לא תודה, משלוח רגיל מספיק
+                        </button>
+                    </div>
+                </div>
+            `;
         }
 
         function startTimer() {
@@ -1382,14 +1413,42 @@
 
         function handleUpsell(step, accepted) {
             if (step === 1) {
+                if (accepted) {
+                    // Customer accepted set - update cart to set price
+                    const setData = productData.setPrices[state.style];
+                    cartTotal = setData.price;
+                    cartItems.push({
+                        size: state.size === 'large' ? 'small' : 'large',
+                        style: state.style,
+                        color: state.color,
+                        price: 0 // Part of set
+                    });
+                }
+                
+                // Move to step 2 (express shipping)
                 document.getElementById('upsell-step-1').classList.add('hidden');
+                setupUpsellStep2();
                 document.getElementById('upsell-step-2').classList.remove('hidden');
                 document.getElementById('upsell-step-2').classList.add('slide-in-up');
                 document.getElementById('upsell-progress').style.width = '100%';
             } else {
+                // Step 2 - express shipping
+                if (accepted) {
+                    cartTotal += 29;
+                }
+                
                 clearInterval(timerInterval);
-                const { finalPrice } = calculatePrice();
-                alert('מעבר לתשלום... סה"כ: ' + finalPrice + ' ש"ח');
+                
+                // Show final summary
+                const itemsList = cartItems.map(item => {
+                    const sizeName = item.size === 'small' ? 'קטנה' : 'גדולה';
+                    const styleName = productData.styleNames[item.style];
+                    const colorName = productData.colorNames[item.color];
+                    return `מגבת ${sizeName} ${styleName} - ${colorName}`;
+                }).join('\n');
+                
+                alert('מעבר לתשלום...\n\n' + itemsList + '\n\nסה"כ: ' + cartTotal + ' ש"ח');
+                
                 upsellFlow.classList.remove('active');
                 document.body.style.overflow = '';
             }
