@@ -593,20 +593,12 @@
                 <i data-lucide="shopping-bag" class="icon-lg"></i>
                 <span class="cart-badge" id="cart-badge" style="display:none;">0</span>
             </div>
-            <div class="text-2xl font-black tracking-tight" style="color: var(--color-primary);">RIGURGITO</div>
+            <div class="text-xl font-black tracking-tight" style="color: var(--color-primary);">PURA VIDA × RIGURGITO</div>
             <div style="width:40px;"></div>
         </header>
         <div style="background: var(--color-primary);" class="text-white text-center py-3 px-4 text-sm font-semibold flex items-center justify-center gap-2">
             <i data-lucide="truck" class="icon-sm"></i>
-            <span>משלוח חינם לכל הארץ + מגבת פנים במתנה להזמנות מעל 500 ש"ח</span>
-        </div>
-    </div>
-
-    <!-- Social Proof Banner -->
-    <div class="bg-green-50 border-b border-green-100 py-2 px-4">
-        <div class="max-w-4xl mx-auto flex items-center justify-center gap-3 text-sm">
-            <span class="pulse-dot"></span>
-            <span class="text-green-700 font-semibold">מעל 5,000 ישראליות מרוצות כבר עשו את השדרוג</span>
+            <span>משלוח חינם לכל הארץ + מחיר מיוחד לזמן מוגבל לכבוד יום האהבה</span>
         </div>
     </div>
 
@@ -619,11 +611,17 @@
                 <div class="md:sticky md:top-32">
                     <div id="slider-container" class="md:rounded-2xl border-b md:border border-gray-100" style="position:relative;">
                         <div class="slider-scroll-area" id="slider-track">
-                            <div class="slider-item"><img src="images/display-main.jpg" alt="מגבת RIGURGITO" id="main-product-img"></div>
-                            <div class="slider-item"><img src="images/display-2.jpg" alt="מגבת RIGURGITO סטייל"></div>
-                            <div class="slider-item"><img src="images/display-3.jpg" alt="מגבות RIGURGITO צבעים"></div>
-                            <div class="slider-item"><img src="images/display-5.jpg" alt="מגבות RIGURGITO ערימה"></div>
-                            <div class="slider-item"><img src="images/display-4.jpg" alt="מגבת RIGURGITO תווית"></div>
+                            <div class="slider-item"><img src="images/display-main.jpg" alt="מגבת RIGURGITO" class="slider-img"></div>
+                            <div class="slider-item"><img src="images/display-2.jpg" alt="מגבת RIGURGITO"></div>
+                            <div class="slider-item"><img src="images/display-3.jpg" alt="מגבות RIGURGITO"></div>
+                            <div class="slider-item"><img src="images/display-4.jpg" alt="מגבת RIGURGITO"></div>
+                            <div class="slider-item"><img src="images/display-5.jpg" alt="מגבות RIGURGITO"></div>
+                            <div class="slider-item"><img src="images/display-6.jpg" alt="מגבת RIGURGITO"></div>
+                            <div class="slider-item"><img src="images/display-7.jpg" alt="מגבות RIGURGITO"></div>
+                            <div class="slider-item"><img src="images/display-8.jpg" alt="מגבת RIGURGITO"></div>
+                            <div class="slider-item"><img src="images/display-9.jpg" alt="מגבות RIGURGITO"></div>
+                            <div class="slider-item"><img src="images/display-10.jpg" alt="מגבת RIGURGITO"></div>
+                            <div class="slider-item"><img src="images/display-11.jpg" alt="מגבות RIGURGITO"></div>
                         </div>
                         <!-- Slider Navigation Arrows -->
                         <button style="position:absolute;top:50%;right:12px;transform:translateY(-50%);width:40px;height:40px;background:rgba(255,255,255,0.9);border-radius:50%;box-shadow:0 2px 10px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;z-index:10;border:none;cursor:pointer;" onclick="slidePrev()">
@@ -633,20 +631,21 @@
                             <i data-lucide="chevron-left" class="icon"></i>
                         </button>
                         <!-- Slide Indicators -->
-                        <div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;">
-                            <span class="slide-dot" style="width:8px;height:8px;border-radius:50%;background:white;transition:all 0.2s;" data-index="0"></span>
-                            <span class="slide-dot" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.5);transition:all 0.2s;" data-index="1"></span>
-                            <span class="slide-dot" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.5);transition:all 0.2s;" data-index="2"></span>
-                            <span class="slide-dot" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.5);transition:all 0.2s;" data-index="3"></span>
-                            <span class="slide-dot" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.5);transition:all 0.2s;" data-index="4"></span>
+                        <div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10;" id="slide-dots">
                         </div>
                     </div>
-                    <div class="flex gap-2 mt-3 overflow-x-auto pb-2 px-4 md:px-0 scrollbar-hide">
+                    <div class="flex gap-2 mt-3 overflow-x-auto pb-2 px-4 md:px-0 scrollbar-hide" id="thumbnail-strip">
                         <img onclick="jumpTo(0)" src="images/display-main.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer thumb-active object-cover bg-gray-50">
                         <img onclick="jumpTo(1)" src="images/display-2.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
                         <img onclick="jumpTo(2)" src="images/display-3.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
-                        <img onclick="jumpTo(3)" src="images/display-5.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
-                        <img onclick="jumpTo(4)" src="images/display-4.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
+                        <img onclick="jumpTo(3)" src="images/display-4.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
+                        <img onclick="jumpTo(4)" src="images/display-5.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
+                        <img onclick="jumpTo(5)" src="images/display-6.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
+                        <img onclick="jumpTo(6)" src="images/display-7.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
+                        <img onclick="jumpTo(7)" src="images/display-8.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
+                        <img onclick="jumpTo(8)" src="images/display-9.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
+                        <img onclick="jumpTo(9)" src="images/display-10.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
+                        <img onclick="jumpTo(10)" src="images/display-11.jpg" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50">
                     </div>
                 </div>
             </div>
@@ -654,30 +653,9 @@
             <!-- Product Info -->
             <div class="w-full md:w-1/2 space-y-5 px-4 md:px-0 mt-5 md:mt-0 text-right" id="product-section">
                 
-                <div>
-                    <p class="text-sm text-gray-500 mb-1">RIGURGITO × PURA VIDA</p>
-                    <h1 class="text-3xl font-black leading-tight" style="color: var(--color-primary);">המגבת האנטי בקטריאלית</h1>
-                    <p class="text-lg text-gray-600 mt-2">המגבת שנשארת רעננה עד 7 ימים, רכה כמו משי</p>
-                </div>
-
-                <!-- Key Benefits -->
-                <div class="space-y-2 text-sm">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="check" class="icon-sm text-green-600"></i>
-                        <span>מחסלת 99% מהחיידקים שגורמים לריח ולגירויים</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="check" class="icon-sm text-green-600"></i>
-                        <span>מתייבשת פי 2 מהר יותר - פחות עובש, פחות ריח</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="check" class="icon-sm text-green-600"></i>
-                        <span>מושלמת לעור רגיש ונוטה לאקנה</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="check" class="icon-sm text-green-600"></i>
-                        <span>חוסכת כביסות וזמן - פעם בשבוע מספיק</span>
-                    </div>
+                <!-- Hero Banner Image -->
+                <div class="rounded-xl overflow-hidden">
+                    <img src="images/hero-banner.jpg" alt="המגבת שמנקה את עצמה" class="w-full">
                 </div>
 
                 <!-- Price Display -->
@@ -1465,6 +1443,7 @@
             lucide.createIcons();
             updatePriceDisplay();
             initSlider();
+            createSlideDots();
         });
 
         const productData = {
@@ -1481,8 +1460,16 @@
             styleNames: { solid: 'חלק', striped: 'פסים' }
         };
 
+        // Display images for slider
+        const displayImages = [
+            'display-main.jpg', 'display-2.jpg', 'display-3.jpg', 'display-4.jpg', 'display-5.jpg',
+            'display-6.jpg', 'display-7.jpg', 'display-8.jpg', 'display-9.jpg', 'display-10.jpg', 'display-11.jpg'
+        ];
+
         let state = { color: 'blue', style: 'striped', size: 'large', qty: 1 };
         let cart = [];
+        let currentSlide = 0;
+        let totalSlides = 11;
 
         function getBasePrice() { return productData.prices[state.style][state.size]; }
         function getVolumeDiscount(qty) { return qty >= 3 ? 0.20 : qty >= 2 ? 0.10 : 0; }
@@ -1519,31 +1506,130 @@
             document.getElementById('sticky-variant').textContent = state.qty + '× ' + (state.size === 'small' ? 'קטנה' : 'גדולה') + ' ' + productData.styleNames[state.style] + ' • ' + productData.colorNames[state.color];
         }
 
-        function changeQty(delta) { state.qty = Math.max(1, Math.min(10, state.qty + delta)); document.getElementById('qty-value').textContent = state.qty; updatePriceDisplay(); }
-        function selectColor(el) { document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active')); el.classList.add('active'); state.color = el.dataset.color; document.getElementById('selected-color-name').textContent = productData.colorNames[state.color]; updatePriceDisplay(); }
-        function selectStyle(el) { document.querySelectorAll('.variant-btn[data-style]').forEach(b => b.classList.remove('active')); el.classList.add('active'); state.style = el.dataset.style; updatePriceDisplay(); }
-        function selectSize(el) { document.querySelectorAll('.variant-btn[data-size]').forEach(b => b.classList.remove('active')); el.classList.add('active'); state.size = el.dataset.size; updatePriceDisplay(); }
+        // Update slider images when variant changes
+        function updateSliderWithVariant() {
+            const variantImg = getProductImage(state.color, state.style, state.size);
+            const track = document.getElementById('slider-track');
+            const thumbStrip = document.getElementById('thumbnail-strip');
+            
+            // Create new image array with variant image first
+            const newImages = [variantImg, ...displayImages];
+            totalSlides = newImages.length;
+            
+            // Update slider track
+            track.innerHTML = newImages.map((img, i) => 
+                '<div class="slider-item"><img src="images/' + img + '" alt="מגבת RIGURGITO"></div>'
+            ).join('');
+            
+            // Update thumbnails
+            thumbStrip.innerHTML = newImages.map((img, i) => 
+                '<img onclick="jumpTo(' + i + ')" src="images/' + img + '" class="slider-thumb w-16 h-16 rounded-lg cursor-pointer object-cover bg-gray-50' + (i === 0 ? ' thumb-active' : '') + '">'
+            ).join('');
+            
+            // Update dots
+            createSlideDots();
+            
+            // Jump to first slide (variant image)
+            currentSlide = 0;
+            jumpTo(0);
+        }
 
-        let currentSlide = 0; const totalSlides = 5;
+        function changeQty(delta) { state.qty = Math.max(1, Math.min(10, state.qty + delta)); document.getElementById('qty-value').textContent = state.qty; updatePriceDisplay(); }
+        
+        function selectColor(el) { 
+            document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active')); 
+            el.classList.add('active'); 
+            state.color = el.dataset.color; 
+            document.getElementById('selected-color-name').textContent = productData.colorNames[state.color]; 
+            updatePriceDisplay(); 
+            updateSliderWithVariant();
+        }
+        
+        function selectStyle(el) { 
+            document.querySelectorAll('.variant-btn[data-style]').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active'); 
+            state.style = el.dataset.style; 
+            updatePriceDisplay();
+            updateSliderWithVariant();
+        }
+        
+        function selectSize(el) { 
+            document.querySelectorAll('.variant-btn[data-size]').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active'); 
+            state.size = el.dataset.size; 
+            updatePriceDisplay();
+            updateSliderWithVariant();
+        }
+
+        // ============ SLIDER ============
+        function createSlideDots() {
+            const dotsContainer = document.getElementById('slide-dots');
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'slide-dot';
+                dot.style.cssText = 'width:6px;height:6px;border-radius:50%;background:' + (i === currentSlide ? 'white' : 'rgba(255,255,255,0.5)') + ';transition:all 0.2s;cursor:pointer;';
+                dot.onclick = () => jumpTo(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
         function initSlider() {
             const track = document.getElementById('slider-track');
             if (!track) return;
             track.addEventListener('scroll', () => {
-                const slideWidth = track.querySelector('.slider-item').offsetWidth;
-                if (slideWidth) { const newIndex = Math.round(track.scrollLeft / slideWidth); if (newIndex !== currentSlide) { currentSlide = newIndex; updateSliderUI(); } }
+                const slideWidth = track.querySelector('.slider-item')?.offsetWidth || 0;
+                if (slideWidth) { 
+                    const newIndex = Math.round(track.scrollLeft / slideWidth); 
+                    if (newIndex !== currentSlide && newIndex >= 0 && newIndex < totalSlides) { 
+                        currentSlide = newIndex; 
+                        updateSliderUI(); 
+                    } 
+                }
             });
             updateSliderUI();
         }
+        
         function updateSliderUI() {
-            document.querySelectorAll('.slider-thumb').forEach((thumb, i) => { thumb.classList.toggle('thumb-active', i === currentSlide); thumb.style.opacity = i === currentSlide ? '1' : '0.6'; });
-            document.querySelectorAll('.slide-dot').forEach((dot, i) => { dot.style.background = i === currentSlide ? 'white' : 'rgba(255,255,255,0.5)'; });
+            document.querySelectorAll('.slider-thumb').forEach((thumb, i) => { 
+                thumb.classList.toggle('thumb-active', i === currentSlide); 
+                thumb.style.opacity = i === currentSlide ? '1' : '0.6'; 
+            });
+            document.querySelectorAll('.slide-dot').forEach((dot, i) => { 
+                dot.style.background = i === currentSlide ? 'white' : 'rgba(255,255,255,0.5)'; 
+            });
         }
-        function jumpTo(index) { const track = document.getElementById('slider-track'); const slideWidth = track.querySelector('.slider-item').offsetWidth; track.scrollTo({ left: slideWidth * index, behavior: 'smooth' }); currentSlide = index; updateSliderUI(); }
+        
+        function jumpTo(index) { 
+            const track = document.getElementById('slider-track'); 
+            if (!track) return;
+            const slide = track.querySelector('.slider-item');
+            if (!slide) return;
+            const slideWidth = slide.offsetWidth; 
+            track.scrollTo({ left: slideWidth * index, behavior: 'smooth' }); 
+            currentSlide = index; 
+            updateSliderUI(); 
+        }
+        
         function slideNext() { jumpTo((currentSlide + 1) % totalSlides); }
         function slidePrev() { jumpTo((currentSlide - 1 + totalSlides) % totalSlides); }
 
-        function getProductImage(color, style, size) { const c = productData.images[color]; return (c && c[style] && c[style][size]) ? c[style][size] : 'display-main.jpg'; }
-        function addToCart() { cart.push({ id: Date.now(), color: state.color, style: state.style, size: state.size, qty: state.qty, unitPrice: getBasePrice() }); updateCartUI(); openCart(); state.qty = 1; document.getElementById('qty-value').textContent = '1'; updatePriceDisplay(); }
+        // ============ CART ============
+        function getProductImage(color, style, size) { 
+            const c = productData.images[color]; 
+            return (c && c[style] && c[style][size]) ? c[style][size] : 'display-main.jpg'; 
+        }
+        
+        function addToCart() { 
+            cart.push({ id: Date.now(), color: state.color, style: state.style, size: state.size, qty: state.qty, unitPrice: getBasePrice() }); 
+            updateCartUI(); 
+            openCart(); 
+            state.qty = 1; 
+            document.getElementById('qty-value').textContent = '1'; 
+            updatePriceDisplay(); 
+        }
+        
         function removeFromCart(id) { cart = cart.filter(item => item.id !== id); updateCartUI(); }
         function getCartTotal() { const totalQty = cart.reduce((s, i) => s + i.qty, 0); return Math.round(cart.reduce((s, i) => s + i.unitPrice * i.qty, 0) * (1 - getVolumeDiscount(totalQty))); }
 
@@ -1573,6 +1659,7 @@
 
         window.addEventListener('scroll', () => { const ps = document.getElementById('product-section'), sb = document.getElementById('sticky-cta'); if (ps && sb) sb.classList.toggle('show', ps.getBoundingClientRect().bottom < 0); });
 
+        // ============ UPSELL ============
         let timerInterval;
         function startUpsell() { setupUpsellStep1(); document.getElementById('upsell-flow').classList.add('active'); document.body.style.overflow = 'hidden'; startTimer(); }
 
